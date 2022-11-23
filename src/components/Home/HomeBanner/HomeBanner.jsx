@@ -2,7 +2,7 @@ import React from "react";
 
 const HomeBanner = () => {
   return (
-    <div>
+    <div className="mb-32">
       <main className="flex flex-col xl:flex-row h-screen">
         <div className="w-full  xl:w-1/2 my-4 h-screen flex items-center justify-center">
           <div className="">
