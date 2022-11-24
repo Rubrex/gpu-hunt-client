@@ -8,8 +8,7 @@ import { BsBookmarkCheck, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { MdReport } from "react-icons/md";
 import { Tooltip } from "flowbite-react";
 
-const ProductCard = ({ productDetails }) => {
-  console.log(productDetails);
+const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   const {
     _id,
     productImage,
@@ -28,7 +27,13 @@ const ProductCard = ({ productDetails }) => {
     marketPrice,
     sold,
     advertised,
-  } = productDetails;
+  } = productInfo;
+
+  const openBookingModal = () => {
+    console.log("btn triggered");
+    setShowModal();
+    setModalProduct(productInfo);
+  };
 
   const shortenDesc = (text) => {
     return text.slice(0, 80);
@@ -114,7 +119,7 @@ const ProductCard = ({ productDetails }) => {
 
           {/* Booking , wishlist */}
           <div className="flex justify-between mt-5">
-            <PrimaryButton>BookNow</PrimaryButton>
+            <PrimaryButton onClick={openBookingModal}>BookNow</PrimaryButton>
 
             <button>
               <Tooltip content="Add to wishlist" placement="top">
