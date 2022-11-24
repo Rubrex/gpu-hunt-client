@@ -15,8 +15,12 @@ const ResellNavbar = () => {
       </Link>
       <div className="flex md:order-2">
         <div className="flex gap-2">
-          <PrimaryButton>Login</PrimaryButton>
-          <PrimaryButton>Register</PrimaryButton>
+          <Link to="/login">
+            <PrimaryButton>Login</PrimaryButton>
+          </Link>
+          <Link to="/register">
+            <PrimaryButton>Register</PrimaryButton>
+          </Link>
         </div>
         <Navbar.Toggle />
       </div>

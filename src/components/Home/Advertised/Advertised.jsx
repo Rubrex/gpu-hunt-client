@@ -11,7 +11,7 @@ const Advertised = () => {
   // State
   const [showModal, setShowModal] = useState(false);
   const [modalProduct, setModalProduct] = useState({});
-  console.log(modalProduct);
+
   // Load data for products [Allow only advertised products]
   const { data: productDetails, isLoading } = useQuery({
     queryKey: ["productDetails"],
