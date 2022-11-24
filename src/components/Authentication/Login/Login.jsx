@@ -1,14 +1,19 @@
 import { Checkbox, Label, TextInput } from "flowbite-react";
-import React from "react";
+import React, { useContext, useState } from "react";
 import loginBannerImg from "../../../assets/images/icons/logo.png";
 import { Link } from "react-router-dom";
 import useTitleChange from "../../../hooks/useTitle";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
+import { AuthContext } from "../../../contexts/AuthProvider";
+import toast from "react-hot-toast";
 
 const Login = () => {
+  // States
+  const [error, setError] = useState();
   // Hooks
   useTitleChange("Login");
   // Access Context
+  const { logIn } = useContext(AuthContext);
 
   // Event Handlers
   const handleLogin = (event) => {
@@ -16,6 +21,28 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+
+    handleSignin(email, password);
+  };
+
+  const handleSignin = (email, password) => {
+    logIn(email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        if (user) {
+          toast.success(
+            "Welcome back" + user?.displayName
+              ? user?.displayName
+              : "Unknown user"
+          );
+        }
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        setError(errorCode);
+      });
   };
 
   return (
@@ -75,7 +102,7 @@ const Login = () => {
                 Don't have an account ?
               </Link>
             </div>
-
+            <p className="text-red-700 text-sm ">{error}</p>
             <PrimaryButton type="submit">Sign In</PrimaryButton>
             {/* <OtherSignInProvider /> */}
           </form>

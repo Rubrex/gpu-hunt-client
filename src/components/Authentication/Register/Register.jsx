@@ -1,13 +1,18 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Label, TextInput } from "flowbite-react";
 import loginBannerImg from "../../../assets/images/icons/logo.png";
 import { Link } from "react-router-dom";
 import useTitleChange from "../../../hooks/useTitle";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
+import { AuthContext } from "../../../contexts/AuthProvider";
+import toast from "react-hot-toast";
 
 const Register = () => {
   useTitleChange("Register");
+  // States
+  const [error, setError] = useState();
   // Access Context
+  const { createUser } = useContext(AuthContext);
   // Event Handlers
   const handleRegistration = (event) => {
     event.preventDefault();
@@ -16,6 +21,24 @@ const Register = () => {
     const profileImg = form.imageLink.value;
     const email = form.email.value;
     const password = form.password.value;
+
+    handleSignUp(email, password);
+  };
+
+  const handleSignUp = (email, password) => {
+    createUser(email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        if (user) {
+          toast.success("Account created successfully");
+        }
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        setError(errorCode);
+        // ..
+      });
   };
 
   return (
@@ -44,7 +67,11 @@ const Register = () => {
             {/* Name */}
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="name1" value="Your Name" />
+                <Label
+                  htmlFor="name1"
+                  value="Your Name"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                />
               </div>
               <TextInput
                 id="name1"
@@ -58,7 +85,11 @@ const Register = () => {
             {/* Email */}
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email1" value="Your email" />
+                <Label
+                  htmlFor="email1"
+                  value="Your email"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                />
               </div>
               <TextInput
                 id="email1"
@@ -71,7 +102,11 @@ const Register = () => {
             {/*  Password */}
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="password1" value="Password" />
+                <Label
+                  htmlFor="password1"
+                  value="Password"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                />
               </div>
               <TextInput
                 id="password1"
@@ -80,23 +115,62 @@ const Register = () => {
                 required={true}
               />
             </div>
+            {/* Select Buyer / Seller  */}
+            <div className="flex items-center gap-5">
+              Account Type
+              <div class="flex items-center ">
+                <input
+                  checked
+                  id="default-radio-1"
+                  type="radio"
+                  value=""
+                  name="default-radio"
+                  class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="default-radio-1"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Buyer
+                </label>
+              </div>
+              <div class="flex items-center">
+                <input
+                  id="default-radio-2"
+                  type="radio"
+                  value=""
+                  name="default-radio"
+                  class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                />
+                <label
+                  for="default-radio-2"
+                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >
+                  Seller
+                </label>
+              </div>
+            </div>
+
             {/* Profile Image Link */}
             <div>
-              <div className="mb-2 block">
-                <Label htmlFor="imageLink" value="Your Profile Image Link" />
-              </div>
-              <TextInput
-                id="imageLink"
-                type="text"
-                name="imageLink"
-                placeholder="Link to the image"
-                required={true}
+              <label
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                for="file_input"
+              >
+                Upload Your Profile Picture
+              </label>
+              <input
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                aria-describedby="file_input_help"
+                id="file_input"
+                type="file"
               />
             </div>
             {/* Already have an account */}
             <div>
-              <Link to="/login">Already have an account</Link>
+              <Link to="/login">Already have an account? </Link>
             </div>
+            <p className="text-red-700 text-lg ">{error}</p>
             <PrimaryButton type="submit">Sign Up</PrimaryButton>
             {/* Other Signin */}
           </form>
