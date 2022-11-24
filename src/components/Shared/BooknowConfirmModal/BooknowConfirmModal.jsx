@@ -37,44 +37,63 @@ const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
 
   return (
     <Modal show={showModal} onClose={onClose}>
-      <form onSubmit={onSubmit}>
-        <Modal.Header>Terms of Service</Modal.Header>
+      <form onSubmit={onSubmit} className="relative">
+        {/* <Modal.Header>Terms of Service</Modal.Header> */}
         <Modal.Body>
+          <div className="absolute -top-2 -right-2">
+            <PrimaryButton>X</PrimaryButton>
+          </div>
           <div className="space-y-6">
             {/* Product Image and info */}
-            <div className="grid grid-cols-1 lg:grid-cols-2">
+            <div className="grid grid-cols-2 bg-gray-100 p-2 my-1 rounded-md">
               {/* Text Description */}
-              <div className="bg-gray-100 p-2 my-1 rounded-md">
-                <h2 className="text-xl font-medium">{productName}</h2>
+              <div className="p-2 text-sm flex  mr-2 rounded-md flex-col justify-between">
                 <p>Original Price: {marketPrice}</p>
-                <p>Resell Price: {productPrice}</p>
+
                 <p>Purchased on: {purchaseDate}</p>
                 <p>Condition: {productCondition}</p>
                 <p>Description: {productDescription}</p>
               </div>
               {/* Product Image */}
-              <img src={productImage} className="rounded-md" alt="" />
+              <div>
+                <img src={productImage} className="rounded-md" alt="" />
+                <h2 className="text-xl font-medium">{productName}</h2>
+                <p>
+                  Price: $
+                  <span className="text-xl font-bold">{productPrice}</span>
+                </p>
+              </div>
             </div>
-            {/* Seller Info */}
-            <h1 className="text-4xl font-light">Seller Info</h1>
-            <p className="font-medium text-bgColor flex items-center ">
-              {sellerName}{" "}
-              {sellerVerified && (
-                <span>
-                  <TiTick className="p-[2px] text-blue-600 bg-gray-200 ml-2 rounded-full  text-lg" />
-                </span>
-              )}
-            </p>
-            <p>Contact Number: {sellerPhone}</p>
-            <p>Contact Email: {sellerEmail}</p>
-            <p>Location: {sellerLocation}</p>
 
-            {/* Buyer Info */}
-            <h1 className="text-4xl font-light">Buyer Info</h1>
-            <p>Your Name: Rubel Hossain</p>
-            <p>Your Email: rubel@hossail.com</p>
-            <p>Your Contact Number: +8801980728221</p>
-            <p>Meeting Location: NorthBadda</p>
+            {/* Seller & Buyers Info */}
+            <div className="grid grid-cols-1 lg:grid-cols-2">
+              <div>
+                {/* Seller Info */}
+                <h1 className="text-3xl font-light">Seller Info</h1>
+                <p className="font-medium text-bgColor flex items-center ">
+                  {sellerName}{" "}
+                  {sellerVerified && (
+                    <span>
+                      <TiTick className="p-[2px] text-blue-600 bg-gray-200 ml-2 rounded-full  text-lg" />
+                    </span>
+                  )}
+                </p>
+                <p>Email: {sellerEmail}</p>
+                <p>Cell Number: {sellerPhone}</p>
+                <p>Location: {sellerLocation}</p>
+              </div>
+
+              <div>
+                {/* Buyer Info */}
+                <h1 className="text-3xl font-light">Buyer Info</h1>
+                <p className="font-medium text-bgColor flex items-center ">
+                  Rubel Hossain
+                </p>
+                <p>Email: rubel@hossail.com</p>
+                <p>Cell Number: +8801980728221</p>
+                <p>Meeting Location: NorthBadda</p>
+              </div>
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
