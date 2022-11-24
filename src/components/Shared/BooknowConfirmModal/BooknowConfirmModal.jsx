@@ -1,7 +1,8 @@
-import { Button, Modal } from "flowbite-react";
-import React, { useState } from "react";
+import { Modal } from "flowbite-react";
+import React from "react";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { TiTick } from "react-icons/ti";
+import { PhotoProvider, PhotoView } from "react-photo-view";
 
 const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
   // get displayName, user email from context api
@@ -56,7 +57,16 @@ const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
               </div>
               {/* Product Image */}
               <div>
-                <img src={productImage} className="rounded-md" alt="" />
+                <PhotoProvider>
+                  <PhotoView src={productImage}>
+                    {/* Product Image */}
+                    <img
+                      className="max-h-[120px] lg:max-h-[150px] w-full object-cover mb-5 rounded-md "
+                      src={productImage}
+                      alt=""
+                    />
+                  </PhotoView>
+                </PhotoProvider>
                 <h2 className="text-xl font-medium">{productName}</h2>
                 <p>
                   Price: $
