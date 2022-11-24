@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button, Label, TextInput } from "flowbite-react";
+import { Label, TextInput } from "flowbite-react";
 import loginBannerImg from "../../../assets/images/icons/logo.png";
 import { Link } from "react-router-dom";
 import useTitleChange from "../../../hooks/useTitle";
@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 
 const Register = () => {
   useTitleChange("Register");
+
   // States
   const [error, setError] = useState();
   // Access Context
@@ -18,19 +19,43 @@ const Register = () => {
     event.preventDefault();
     const form = event.target;
     const name = form.name.value;
-    const profileImg = form.imageLink.value;
+    const profileImg = form.uploadPhoto.files[0];
     const email = form.email.value;
     const password = form.password.value;
 
-    handleSignUp(email, password);
+    handleSignUp(email, password, profileImg);
   };
 
-  const handleSignUp = (email, password) => {
+  //   IMAGEBB API KEY
+  const imagehostkey = import.meta.env.VITE_IMGBB_KEY;
+
+  // Handle Signup
+  const handleSignUp = (email, password, profileImg) => {
     createUser(email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        if (user) {
+        const formData = new FormData();
+        if (user.email) {
+          // User Created successfully here
+
+          // After this we are saving the image from imgbb to db
+          const url = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
+          formData.append("image", profileImg);
+
+          fetch(url, {
+            method: "POST",
+            body: formData,
+          })
+            .then((res) => res.json())
+
+            .then((imgData) => {
+              if (imgData.success) {
+                const imageLink = imgData.data.url;
+                // Upload this to DB
+              }
+            });
+          console.log(profileImg, imgBBUri);
           toast.success("Account created successfully");
         }
       })
@@ -70,7 +95,7 @@ const Register = () => {
                 <Label
                   htmlFor="name1"
                   value="Your Name"
-                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 />
               </div>
               <TextInput
@@ -88,7 +113,7 @@ const Register = () => {
                 <Label
                   htmlFor="email1"
                   value="Your email"
-                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 />
               </div>
               <TextInput
@@ -105,7 +130,7 @@ const Register = () => {
                 <Label
                   htmlFor="password1"
                   value="Password"
-                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 />
               </div>
               <TextInput
@@ -117,34 +142,36 @@ const Register = () => {
             </div>
             {/* Select Buyer / Seller  */}
             <div className="flex items-center gap-5">
-              Account Type
-              <div class="flex items-center ">
+              <p className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                Account Type
+              </p>
+              <div className="flex items-center ">
                 <input
                   checked
                   id="default-radio-1"
                   type="radio"
                   value=""
                   name="default-radio"
-                  class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
                   for="default-radio-1"
-                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Buyer
                 </label>
               </div>
-              <div class="flex items-center">
+              <div className="flex items-center">
                 <input
                   id="default-radio-2"
                   type="radio"
                   value=""
                   name="default-radio"
-                  class="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
                   for="default-radio-2"
-                  class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Seller
                 </label>
@@ -154,15 +181,16 @@ const Register = () => {
             {/* Profile Image Link */}
             <div>
               <label
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                className="ml-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 "
                 for="file_input"
               >
                 Upload Your Profile Picture
               </label>
               <input
-                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
                 aria-describedby="file_input_help"
                 id="file_input"
+                name="uploadPhoto"
                 type="file"
               />
             </div>
