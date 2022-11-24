@@ -3,6 +3,8 @@ import underLine from "../../../assets/images/others/under_line.png";
 import "react-photo-view/dist/react-photo-view.css";
 import { useQuery } from "@tanstack/react-query";
 import ProductCard from "../../Shared/ProductCard/ProductCard";
+import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
+import Loading from "../../Shared/Loading/Loading";
 
 const Advertised = () => {
   // Load data for products [Allow only advertised products]
@@ -15,6 +17,10 @@ const Advertised = () => {
     },
   });
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <section className="mb-32">
       <div className="flex justify-between">
@@ -26,9 +32,7 @@ const Advertised = () => {
           Products
         </h2>
         <div>
-          <button className="py-1 px-3 border bg-blue-700 text-white rounded-md">
-            Show All
-          </button>
+          <PrimaryButton>Show All</PrimaryButton>
         </div>
       </div>
 
