@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.16.1",
     "flowbite": "^1.5.4",
     "flowbite-react": "^0.3.5",
     "react": "^18.2.0",
