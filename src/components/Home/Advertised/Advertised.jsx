@@ -11,7 +11,7 @@ const Advertised = () => {
   const { data: productDetails, isLoading } = useQuery({
     queryKey: ["productDetails"],
     queryFn: async () => {
-      const res = await fetch("products.json");
+      const res = await fetch("products.json"); //API needed
       const data = res.json();
       return data;
     },

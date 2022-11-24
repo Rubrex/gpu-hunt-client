@@ -1,22 +1,23 @@
 import { Button, Navbar } from "flowbite-react";
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import logo from "../../../assets/images/icons/logo.png";
+import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 const ResellNavbar = () => {
   return (
-    <Navbar fluid={true} rounded={true} className="max-w-6xl mx-auto">
+    <Navbar fluid={true} rounded={true} className="max-w-6xl mx-auto ">
       <Link className="flex items-center" to="/">
-        <img
-          src="https://flowbite.com/docs/images/logo.svg"
-          className="mr-3 h-6 sm:h-9"
-          alt="Flowbite Logo"
-        />
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          BuySell
+        <img src={logo} className="mr-3 h-6 sm:h-9" alt="GPU Hunts" />
+        <span className="self-center whitespace-nowrap text-2xl font-bold text-gray-700 dark:text-white">
+          GPUHunts
         </span>
       </Link>
       <div className="flex md:order-2">
-        <Button>Login</Button>
+        <div className="flex gap-2">
+          <PrimaryButton>Login</PrimaryButton>
+          <PrimaryButton>Register</PrimaryButton>
+        </div>
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>

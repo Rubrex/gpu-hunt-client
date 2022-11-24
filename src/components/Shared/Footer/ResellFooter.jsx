@@ -1,5 +1,7 @@
 import { Footer } from "flowbite-react";
 import React from "react";
+import { Link } from "react-router-dom";
+import logo from "../../../assets/images/icons/logo.png";
 
 const ResellFooter = () => {
   return (
@@ -7,12 +9,12 @@ const ResellFooter = () => {
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
           <div>
-            <Footer.Brand
-              href="https://flowbite.com"
-              src="https://flowbite.com/docs/images/logo.svg"
-              alt="Flowbite Logo"
-              name="BuySell"
-            />
+            <Link className="flex items-center" to="/">
+              <img src={logo} className="mr-3 h-6 sm:h-9" alt="GPU Hunts" />
+              <span className="self-center whitespace-nowrap text-2xl font-bold text-gray-700 dark:text-white">
+                GPUHunts
+              </span>
+            </Link>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
             <div>
