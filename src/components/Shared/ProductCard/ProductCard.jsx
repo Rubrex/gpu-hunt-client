@@ -4,6 +4,9 @@ import { PhotoProvider, PhotoView } from "react-photo-view";
 import priceTagImage from "../../../assets/images/icons/priceTag.png";
 import defaultProfileImage from "../../../assets/images/icons/profile.png";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
+import { BsBookmarkCheck, BsFillBookmarkCheckFill } from "react-icons/bs";
+import { MdReport } from "react-icons/md";
+import { Tooltip } from "flowbite-react";
 
 const ProductCard = ({ productDetails }) => {
   console.log(productDetails);
@@ -50,9 +53,9 @@ const ProductCard = ({ productDetails }) => {
           <div className="absolute top-1 right-0 ">
             <div className="flex justify-center items-center">
               <img className="w-20 -mr-[3px]" src={priceTagImage} />
-              <span className="absolute text-white font-bold">
-                ${productPrice}
-              </span>
+              <p className="absolute text-white ">
+                $<span className="text-xl font-semibold">{productPrice}</span>
+              </p>
             </div>
           </div>
         </div>
@@ -83,7 +86,15 @@ const ProductCard = ({ productDetails }) => {
 
           {/* Product Name */}
           <h3 className="text-lg lg:text-lg font-medium my-2">{productName}</h3>
-          <div className="text-sm">
+          <div className="text-sm relative">
+            {/*  Report to admin */}
+            <div className="absolute top-0 right-0">
+              <Tooltip content="Report to admin" placement="left">
+                <button>
+                  <MdReport className="text-4xl bg-gray-100 hover:bg-orange-100 rounded-md p-2 text-primary" />
+                </button>
+              </Tooltip>
+            </div>
             <p>
               Condition:{" "}
               <span className=" text-green-600 font-medium">
@@ -99,11 +110,19 @@ const ProductCard = ({ productDetails }) => {
             </p>
           </div>
 
-          {/* Booking , wishlist, report admin */}
+          {/* Booking , wishlist */}
           <div className="flex justify-between mt-5">
             <PrimaryButton>BookNow</PrimaryButton>
-            <PrimaryButton>Cart</PrimaryButton>
-            <PrimaryButton>Report</PrimaryButton>
+
+            <button>
+              <Tooltip content="Add to wishlist" placement="top">
+                {(
+                  <BsBookmarkCheck className="text-4xl bg-gray-100 hover:bg-orange-100 rounded-md p-2 text-primary" />
+                ) || (
+                  <BsFillBookmarkCheckFill className="text-4xl bg-gray-100 hover:bg-orange-100 rounded-md p-2 text-primary" />
+                )}
+              </Tooltip>
+            </button>
           </div>
         </div>
       </div>
