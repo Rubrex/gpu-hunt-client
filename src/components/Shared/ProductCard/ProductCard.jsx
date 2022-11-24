@@ -35,9 +35,9 @@ const ProductCard = ({ productDetails }) => {
   };
 
   return (
-    <div className="justify-self-center">
+    <div className="justify-self-center ">
       {/* Card */}
-      <div className="border p-2 lg:p-3 rounded-md min-w-[200px] lg:min-w-[270px]">
+      <div className="border p-2 hover:shadow-lg transition-all duration-300  lg:p-3 rounded-md min-w-[200px] lg:min-w-[270px]">
         {/* Photo + Price Tag */}
         <div className="relative">
           <PhotoProvider>
@@ -70,7 +70,7 @@ const ProductCard = ({ productDetails }) => {
               alt="user image"
             />
             <div>
-              <p className="font-medium text-bgColor flex items-center">
+              <p className="font-medium text-bgColor flex items-center ">
                 {sellerName}{" "}
                 {sellerVerified && (
                   <span>
@@ -85,7 +85,9 @@ const ProductCard = ({ productDetails }) => {
           </div>
 
           {/* Product Name */}
-          <h3 className="text-lg lg:text-lg font-medium my-2">{productName}</h3>
+          <h3 className="text-lg lg:text-lg font-medium my-2 ">
+            {productName}
+          </h3>
           <div className="text-sm relative">
             {/*  Report to admin */}
             <div className="absolute top-0 right-0">

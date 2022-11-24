@@ -12,7 +12,11 @@ module.exports = {
       secondary: "#497174",
       bgColor: "EFF5F5",
     },
-    extend: {},
+    extend: {
+      fontFamily: {
+        lato: ["Lato"],
+      },
+    },
   },
   plugins: [require("flowbite/plugin")],
 };
