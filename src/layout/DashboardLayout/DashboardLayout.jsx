@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigation } from "react-router-dom";
 import GpuHuntFooter from "../../components/Shared/GpuHuntFooter/GpuHuntFooter";
 import GpuHuntNavbar from "../../components/Shared/GpuHuntNavbar/GpuHuntNavbar";
 import { AuthContext } from "../../contexts/AuthProvider";

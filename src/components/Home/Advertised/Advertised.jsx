@@ -6,6 +6,7 @@ import ProductCard from "../../Shared/ProductCard/ProductCard";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 import Loading from "../../Shared/Loading/Loading";
 import BooknowConfirmModal from "../../Shared/BooknowConfirmModal/BooknowConfirmModal";
+import axios from "axios";
 
 const Advertised = () => {
   // State
@@ -16,11 +17,14 @@ const Advertised = () => {
   const { data: productDetails, isLoading } = useQuery({
     queryKey: ["productDetails"],
     queryFn: async () => {
-      const res = await fetch("products.json"); //API
-      const data = res.json();
+      const url = import.meta.env.VITE_API + "/products/advertised";
+      const res = await axios.get(url);
+      const data = res.data;
       return data;
     },
   });
+
+  console.log(productDetails);
 
   if (isLoading) {
     return <Loading />;

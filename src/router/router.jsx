@@ -1,7 +1,9 @@
+import axios from "axios";
 import { createBrowserRouter } from "react-router-dom";
 import Login from "../components/Authentication/Login/Login";
 import Register from "../components/Authentication/Register/Register";
 import Blogs from "../components/Blogs/Blogs";
+import Category from "../components/Category/Category";
 import AddProduct from "../components/Dashboard/AddProduct/AddProduct";
 import AllBuyers from "../components/Dashboard/AllBuyers/AllBuyers";
 import AllSellers from "../components/Dashboard/AllSellers/AllSellers";
@@ -33,6 +35,17 @@ const router = createBrowserRouter([
       {
         path: "/blogs",
         element: <Blogs />,
+      },
+      {
+        path: "/category/:category",
+        element: <Category />,
+        loader: async ({ params }) => {
+          const catagory = params.category;
+          const url = import.meta.env.VITE_API + "/categories/" + catagory;
+          const categoryResponse = await axios.get(url);
+
+          return categoryResponse.data;
+        },
       },
       {
         path: "/login",
