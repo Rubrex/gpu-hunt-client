@@ -21,7 +21,6 @@ const Register = () => {
 
   // Access Context
   const { user, createUser, updateUser } = useContext(AuthContext);
-  // console.log(user);
 
   // Event Handlers
   const handleRegistration = (event) => {
@@ -41,57 +40,16 @@ const Register = () => {
   const imagehostkey = import.meta.env.VITE_IMGBB_KEY;
 
   // Update Profile in firebase
-  const updateProfileData = (
-    profileInfo,
-    profileImg,
-    role,
-    email,
-    password
-  ) => {
-    console.log(profileInfo);
-    const formData = new FormData();
+  const updateProfileData = (profileInfo) => {
     updateUser(profileInfo)
       .then(() => {
         // Profile updated!
         toast.success("Profile Updated");
-        // After this we are saving the image from imgbb to db
-        const url = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
-        formData.append("image", profileImg);
-
-        fetch(url, {
-          method: "POST",
-          body: formData,
-        })
-          .then((res) => res.json())
-
-          .then((imgData) => {
-            if (imgData.success) {
-              const imageLink = imgData.data.url;
-              // Uploading User info to DB
-              axios
-                .post(import.meta.env.VITE_API + "/users", {
-                  email,
-                  password,
-                  role,
-                  image: imageLink,
-                  wishlists: [],
-                })
-                .then((response) => {
-                  if (response.data.acknowledged) {
-                    setLoading(false);
-                    navigate(from, { replace: true });
-                  }
-                })
-                .catch((error) => {
-                  setLoading(false);
-                  console.log(error);
-                });
-            }
-          });
       })
       .catch((error) => {
         // An error occurred
         console.log(error);
+        toast.error(error.code);
         // ...
       });
   };
@@ -105,10 +63,51 @@ const Register = () => {
 
         if (user.email) {
           // User Created successfully here
-          toast.success("Account created successfully");
-          // Update Profile
-          const profileInfo = { displayName: userName };
-          updateProfileData(profileInfo, profileImg, role, email, password);
+          // Upload Image to imgbb
+          // After this we are saving the image from imgbb to db
+
+          const url = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
+          const formData = new FormData();
+          formData.append("image", profileImg);
+
+          fetch(url, {
+            method: "POST",
+            body: formData,
+          })
+            .then((res) => res.json())
+
+            .then((imgData) => {
+              if (imgData.success) {
+                const imageLink = imgData.data.url;
+
+                // Uploading User info to DB
+                axios
+                  .post(import.meta.env.VITE_API + "/users", {
+                    email,
+                    password,
+                    role,
+                    image: imageLink,
+                    wishlists: [],
+                  })
+                  .then((response) => {
+                    if (response.data.acknowledged) {
+                      toast.success("Account created successfully");
+                      // Update Profile
+                      const profileInfo = {
+                        displayName: userName,
+                        photoURL: imageLink,
+                      };
+                      updateProfileData(profileInfo);
+                      setLoading(false);
+                      navigate(from, { replace: true });
+                    }
+                  })
+                  .catch((error) => {
+                    setLoading(false);
+                    console.log(error);
+                  });
+              }
+            });
         }
       })
       .catch((error) => {
