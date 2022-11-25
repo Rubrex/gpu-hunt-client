@@ -1,13 +1,16 @@
 import { Checkbox, Label, TextInput } from "flowbite-react";
 import React, { useContext, useState } from "react";
 import loginBannerImg from "../../../assets/images/icons/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useTitleChange from "../../../hooks/useTitle";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import toast from "react-hot-toast";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
   // States
   const [error, setError] = useState();
   // Hooks
@@ -31,11 +34,8 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         if (user) {
-          toast.success(
-            "Welcome back" + user?.displayName
-              ? user?.displayName
-              : "Unknown user"
-          );
+          toast.success(`Welcome back ${user?.displayName}`);
+          navigate(from, { replace: true });
         }
         // ...
       })

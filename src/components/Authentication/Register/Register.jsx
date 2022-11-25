@@ -20,69 +20,95 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   // Access Context
-  const { createUser } = useContext(AuthContext);
+  const { user, createUser, updateUser } = useContext(AuthContext);
+  // console.log(user);
 
   // Event Handlers
   const handleRegistration = (event) => {
     event.preventDefault();
     setLoading(true);
     const form = event.target;
-    const name = form.name.value;
+    const userName = form.name.value;
     const profileImg = form.uploadPhoto.files[0];
     const email = form.email.value;
     const password = form.password.value;
     const role = form.roleRadio.value;
 
-    handleSignUp(email, password, profileImg, role);
+    handleSignUp(userName, email, password, profileImg, role);
   };
 
   //   IMAGEBB API KEY
   const imagehostkey = import.meta.env.VITE_IMGBB_KEY;
 
+  // Update Profile in firebase
+  const updateProfileData = (
+    profileInfo,
+    profileImg,
+    role,
+    email,
+    password
+  ) => {
+    console.log(profileInfo);
+    const formData = new FormData();
+    updateUser(profileInfo)
+      .then(() => {
+        // Profile updated!
+        toast.success("Profile Updated");
+        // After this we are saving the image from imgbb to db
+        const url = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
+        formData.append("image", profileImg);
+
+        fetch(url, {
+          method: "POST",
+          body: formData,
+        })
+          .then((res) => res.json())
+
+          .then((imgData) => {
+            if (imgData.success) {
+              const imageLink = imgData.data.url;
+              // Uploading User info to DB
+              axios
+                .post(import.meta.env.VITE_API + "/users", {
+                  email,
+                  password,
+                  role,
+                  image: imageLink,
+                  wishlists: [],
+                })
+                .then((response) => {
+                  if (response.data.acknowledged) {
+                    setLoading(false);
+                    navigate(from, { replace: true });
+                  }
+                })
+                .catch((error) => {
+                  setLoading(false);
+                  console.log(error);
+                });
+            }
+          });
+      })
+      .catch((error) => {
+        // An error occurred
+        console.log(error);
+        // ...
+      });
+  };
+
   // Handle Signup
-  const handleSignUp = (email, password, profileImg, role) => {
+  const handleSignUp = (userName, email, password, profileImg, role) => {
     createUser(email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        const formData = new FormData();
+
         if (user.email) {
           // User Created successfully here
           toast.success("Account created successfully");
-          // After this we are saving the image from imgbb to db
-          const url = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
-          formData.append("image", profileImg);
-
-          fetch(url, {
-            method: "POST",
-            body: formData,
-          })
-            .then((res) => res.json())
-
-            .then((imgData) => {
-              if (imgData.success) {
-                const imageLink = imgData.data.url;
-                // Uploading User info to DB
-                axios
-                  .post(import.meta.env.VITE_API + "/users", {
-                    email,
-                    password,
-                    role,
-                    image: imageLink,
-                    wishlists: [],
-                  })
-                  .then((response) => {
-                    if (response.data.acknowledged) {
-                      setLoading(false);
-                      navigate(from, { replace: true });
-                    }
-                  })
-                  .catch((error) => {
-                    setLoading(false);
-                    console.log(error);
-                  });
-              }
-            });
+          // Update Profile
+          const profileInfo = { displayName: userName };
+          updateProfileData(profileInfo, profileImg, role, email, password);
         }
       })
       .catch((error) => {

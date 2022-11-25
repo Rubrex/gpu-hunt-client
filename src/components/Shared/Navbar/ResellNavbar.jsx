@@ -42,6 +42,7 @@ const ResellNavbar = () => {
       </div>
       <Navbar.Collapse>
         <NavLink to="/">Home</NavLink>
+        {user?.email && <NavLink to="/dashboard">Dashboard</NavLink>}
       </Navbar.Collapse>
     </Navbar>
   );
