@@ -32,7 +32,7 @@ const Categories = () => {
           <Link
             to={`/category/${category.category}`}
             key={category._id}
-            className="justify-self-center hover:-translate-y-2 transition-all duration-300 bg-gray-100 hover:text-primary flex relative"
+            className="justify-self-center hover:-translate-y-2 transition-all duration-300  opacity-90  hover:saturate-200 hover:text-primary flex relative"
           >
             <div className="">
               <h2 className="text-3xl md:text-4xl  font-extrabold absolute origin-bottom-left -rotate-90 -left-2 bottom-0">

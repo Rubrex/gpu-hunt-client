@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import useTitleChange from "../../hooks/useTitle";
 import BooknowConfirmModal from "../Shared/BooknowConfirmModal/BooknowConfirmModal";
 import PrimaryButton from "../Shared/PrimaryButton/PrimaryButton";
 import ProductCard from "../Shared/ProductCard/ProductCard";
@@ -16,6 +17,8 @@ const Category = () => {
     console.log("Modal triggered");
     setShowModal(false);
   };
+
+  useTitleChange(productDetails[0].productCategory);
 
   return (
     <div>
