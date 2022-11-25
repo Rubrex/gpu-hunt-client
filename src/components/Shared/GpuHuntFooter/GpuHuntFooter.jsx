@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../../assets/images/icons/logo.png";
 
-const ResellFooter = () => {
+const GpuHuntFooter = () => {
   return (
     <Footer container={true} className="max-w-6xl mx-auto">
       <div className="w-full">
@@ -56,4 +56,4 @@ const ResellFooter = () => {
   );
 };
 
-export default ResellFooter;
+export default GpuHuntFooter;

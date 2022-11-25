@@ -1,8 +1,7 @@
-import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { NavLink, Outlet } from "react-router-dom";
-import ResellFooter from "../../components/Shared/Footer/ResellFooter";
-import ResellNavbar from "../../components/Shared/Navbar/ResellNavbar";
+import GpuHuntFooter from "../../components/Shared/GpuHuntFooter/GpuHuntFooter";
+import GpuHuntNavbar from "../../components/Shared/GpuHuntNavbar/GpuHuntNavbar";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const DashboardLayout = () => {
@@ -10,7 +9,7 @@ const DashboardLayout = () => {
 
   return (
     <>
-      <ResellNavbar />
+      <GpuHuntNavbar />
       <div className="max-w-6xl mx-auto px-2 lg:px-0 ">
         {/* Drawer */}
         <div className="grid grid-cols-1 lg:grid-cols-12">
@@ -69,7 +68,7 @@ const DashboardLayout = () => {
 
         {/* Drawer ends */}
       </div>
-      <ResellFooter />
+      <GpuHuntFooter />
     </>
   );
 };

@@ -5,7 +5,7 @@ import logo from "../../../assets/images/icons/logo.png";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
-const ResellNavbar = () => {
+const GpuHuntNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
 
   const logoutHandler = () => {
@@ -41,11 +41,20 @@ const ResellNavbar = () => {
         <Navbar.Toggle />
       </div>
       <Navbar.Collapse>
-        <NavLink to="/">Home</NavLink>
-        {user?.email && <NavLink to="/dashboard">Dashboard</NavLink>}
+        <NavLink className="hover:text-primary" to="/">
+          Home
+        </NavLink>
+        {user?.email && (
+          <NavLink className="hover:text-primary" to="/dashboard">
+            Dashboard
+          </NavLink>
+        )}
+        <NavLink className="hover:text-primary" to="/blogs">
+          Blogs
+        </NavLink>
       </Navbar.Collapse>
     </Navbar>
   );
 };
 
-export default ResellNavbar;
+export default GpuHuntNavbar;
