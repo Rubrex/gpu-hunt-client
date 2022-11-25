@@ -24,8 +24,6 @@ const Advertised = () => {
     },
   });
 
-  console.log(productDetails);
-
   if (isLoading) {
     return <Loading />;
   }
