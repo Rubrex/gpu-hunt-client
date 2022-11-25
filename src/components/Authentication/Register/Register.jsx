@@ -1,36 +1,46 @@
 import React, { useContext, useState } from "react";
 import { Label, TextInput } from "flowbite-react";
 import loginBannerImg from "../../../assets/images/icons/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import useTitleChange from "../../../hooks/useTitle";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import toast from "react-hot-toast";
+import axios from "axios";
+import SmallLoading from "../../Shared/SmallLoading/SmallLoading";
 
 const Register = () => {
   useTitleChange("Register");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location?.state?.from?.pathname || "/";
 
   // States
   const [error, setError] = useState();
+  const [loading, setLoading] = useState(false);
+
   // Access Context
   const { createUser } = useContext(AuthContext);
+
   // Event Handlers
   const handleRegistration = (event) => {
     event.preventDefault();
+    setLoading(true);
     const form = event.target;
     const name = form.name.value;
     const profileImg = form.uploadPhoto.files[0];
     const email = form.email.value;
     const password = form.password.value;
+    const role = form.roleRadio.value;
 
-    handleSignUp(email, password, profileImg);
+    handleSignUp(email, password, profileImg, role);
   };
 
   //   IMAGEBB API KEY
   const imagehostkey = import.meta.env.VITE_IMGBB_KEY;
 
   // Handle Signup
-  const handleSignUp = (email, password, profileImg) => {
+  const handleSignUp = (email, password, profileImg, role) => {
     createUser(email, password)
       .then((userCredential) => {
         // Signed in
@@ -38,7 +48,7 @@ const Register = () => {
         const formData = new FormData();
         if (user.email) {
           // User Created successfully here
-
+          toast.success("Account created successfully");
           // After this we are saving the image from imgbb to db
           const url = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
           formData.append("image", profileImg);
@@ -52,15 +62,32 @@ const Register = () => {
             .then((imgData) => {
               if (imgData.success) {
                 const imageLink = imgData.data.url;
-                // Upload this to DB
+                // Uploading User info to DB
+                axios
+                  .post(import.meta.env.VITE_API + "/users", {
+                    email,
+                    password,
+                    role,
+                    image: imageLink,
+                    wishlists: [],
+                  })
+                  .then((response) => {
+                    if (response.data.acknowledged) {
+                      setLoading(false);
+                      navigate(from, { replace: true });
+                    }
+                  })
+                  .catch((error) => {
+                    setLoading(false);
+                    console.log(error);
+                  });
               }
             });
-          console.log(profileImg, imgBBUri);
-          toast.success("Account created successfully");
         }
       })
       .catch((error) => {
         const errorCode = error.code;
+        setLoading(false);
         setError(errorCode);
         // ..
       });
@@ -147,30 +174,30 @@ const Register = () => {
               </p>
               <div className="flex items-center ">
                 <input
-                  checked
+                  defaultChecked
                   id="default-radio-1"
                   type="radio"
-                  value=""
-                  name="default-radio"
+                  value="user"
+                  name="roleRadio"
                   className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
-                  for="default-radio-1"
+                  htmlFor="default-radio-1"
                   className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
-                  Buyer
+                  User
                 </label>
               </div>
               <div className="flex items-center">
                 <input
                   id="default-radio-2"
                   type="radio"
-                  value=""
-                  name="default-radio"
+                  value="seller"
+                  name="roleRadio"
                   className="w-4 h-4 text-orange-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
-                  for="default-radio-2"
+                  htmlFor="default-radio-2"
                   className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Seller
@@ -182,7 +209,7 @@ const Register = () => {
             <div>
               <label
                 className="ml-2 mb-2 text-sm font-medium text-gray-900 dark:text-gray-300 "
-                for="file_input"
+                htmlFor="file_input"
               >
                 Upload Your Profile Picture
               </label>
@@ -199,7 +226,9 @@ const Register = () => {
               <Link to="/login">Already have an account? </Link>
             </div>
             <p className="text-red-700 text-lg ">{error}</p>
-            <PrimaryButton type="submit">Sign Up</PrimaryButton>
+            <PrimaryButton type="submit" disabled={loading}>
+              {loading ? <SmallLoading /> : "Signup"}
+            </PrimaryButton>
             {/* Other Signin */}
           </form>
         </div>
