@@ -58,6 +58,8 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard />,
       },
+
+      // Buyers / Users Route
       {
         path: "/dashboard/myorders",
         element: (
