@@ -8,6 +8,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.init";
+import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -15,6 +16,7 @@ const AuthProvider = ({ children }) => {
   // States
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState("");
   const auth = getAuth(app);
 
   //   Create User
@@ -43,9 +45,12 @@ const AuthProvider = ({ children }) => {
   //   Auth Observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log(currentUser);
       if (currentUser === null || currentUser.email) {
         setUser(currentUser);
+        //   set user Role
+        const roleUrl =
+          import.meta.env.VITE_API + "/users/role/" + currentUser.email;
+        axios.get(roleUrl).then((response) => setRole(response.data));
       }
       setIsLoading(false);
     });
@@ -53,8 +58,11 @@ const AuthProvider = ({ children }) => {
     return () => unsubscribe();
   }, []);
 
+  // Get user role
+
   const providerValue = {
     user,
+    role,
     isLoading,
     createUser,
     logIn,
