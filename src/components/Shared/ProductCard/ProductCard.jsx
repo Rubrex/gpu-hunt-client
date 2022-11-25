@@ -7,6 +7,7 @@ import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { BsBookmarkCheck, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { MdReport } from "react-icons/md";
 import { Tooltip } from "flowbite-react";
+import { format } from "date-fns";
 
 const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   const {
@@ -22,12 +23,14 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
     sellerEmail,
     sellerVerified,
     sellerLocation,
-    addedDate,
+    postAdded,
     purchaseDate,
     marketPrice,
     sold,
     advertised,
   } = productInfo;
+
+  const formatedDate = format(new Date(parseInt(postAdded)), "PP");
 
   const openBookingModal = () => {
     console.log("btn triggered");
@@ -84,7 +87,7 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
                 )}
               </p>
               <span className="text-slate-600 text-sm">
-                <small>Added on: {addedDate}</small>
+                <small>Added on: {formatedDate}</small>
               </span>
             </div>
           </div>
@@ -111,7 +114,7 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
             <p>Market Price: ${marketPrice}</p>
             <p>Purchased: {purchaseDate}</p>
             <p>Location: {sellerLocation}</p>
-            <p className="bg-gray-100 p-2 my-1 rounded-md">
+            <p className="bg-gray-100 p-2 my-1 rounded-md min-h-[76px]">
               <span className="font-medium">Description:</span>{" "}
               {shortenDesc(productDescription)} ...
             </p>

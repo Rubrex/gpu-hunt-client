@@ -23,6 +23,9 @@ const AddProduct = () => {
     axios.get(url).then((res) => setIsVerified(res.data));
   }, [user]);
 
+  const epoch = (date) => {
+    return Date.parse(date);
+  };
   const onSubmit = (data) => {
     setLoading(true);
     const formData = new FormData();
@@ -54,7 +57,7 @@ const AddProduct = () => {
             sellerPhone: data.sellerPhone,
             sellerLocation: data.sellerLocation,
             sellerVerified: isVerified,
-            postAdded: new Date(),
+            postAdded: epoch(new Date()),
             paid: false,
             advertised: false,
           };
