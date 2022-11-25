@@ -43,6 +43,22 @@ const DashboardLayout = () => {
                   </li>
                 </>
               )}
+              {/* Admin Role Routes */}
+              {role === "admin" && (
+                <>
+                  <li className="bg-gray-100 w-full text-center p-2">
+                    <NavLink to="/dashboard/allsellers">All Sellers</NavLink>
+                  </li>
+                  <li className="bg-gray-100 w-full text-center p-2">
+                    <NavLink to="/dashboard/allbuyers">All Buyers</NavLink>
+                  </li>
+                  <li className="bg-gray-100 w-full text-center p-2">
+                    <NavLink to="/dashboard/reporteditems">
+                      Reported Items
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </aside>
           {/* Main Content Area */}
