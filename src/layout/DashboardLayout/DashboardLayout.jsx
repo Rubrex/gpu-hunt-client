@@ -6,8 +6,8 @@ import ResellNavbar from "../../components/Shared/Navbar/ResellNavbar";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 const DashboardLayout = () => {
-  const { user, role } = useContext(AuthContext);
-  console.log(role);
+  const { role } = useContext(AuthContext);
+
   return (
     <>
       <ResellNavbar />
@@ -26,6 +26,20 @@ const DashboardLayout = () => {
                   </li>
                   <li className="bg-gray-100 w-full text-center p-2">
                     <NavLink to="/dashboard/mywishlists">My Wishlists</NavLink>
+                  </li>
+                </>
+              )}
+              {/* Seller Role Routes */}
+              {role === "seller" && (
+                <>
+                  <li className="bg-gray-100 w-full text-center p-2">
+                    <NavLink to="/dashboard/addproduct">Add Product</NavLink>
+                  </li>
+                  <li className="bg-gray-100 w-full text-center p-2">
+                    <NavLink to="/dashboard/myproducts">My Products</NavLink>
+                  </li>
+                  <li className="bg-gray-100 w-full text-center p-2">
+                    <NavLink to="/dashboard/mybuyers">My Buyers</NavLink>
                   </li>
                 </>
               )}

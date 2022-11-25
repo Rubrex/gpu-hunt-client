@@ -6,7 +6,6 @@ const useUser = (email) => {
   const [isUserLoading, setIsUserLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Email inside useUsers hook:", email);
     if (email) {
       // Check if role is user
       const url = import.meta.env.VITE_API + "/users/role/" + email;
@@ -15,6 +14,8 @@ const useUser = (email) => {
         // If the role is user continue
         if (response.data === "user") {
           setIsUser(true);
+        } else {
+          setIsUser(false);
         }
         setIsUserLoading(false);
       });
