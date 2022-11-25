@@ -1,17 +1,76 @@
-import React, { useContext } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
+import SmallLoading from "../../Shared/SmallLoading/SmallLoading";
 
 const AddProduct = () => {
   const { user } = useContext(AuthContext);
+  const [isVerified, setIsVerified] = useState(false);
+  const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  useEffect(() => {
+    const url = import.meta.env.VITE_API + "/users/verified/" + user?.email;
+    axios.get(url).then((res) => setIsVerified(res.data));
+  }, [user]);
+
+  const onSubmit = (data) => {
+    setLoading(true);
+    const formData = new FormData();
+    //   IMAGEBB API KEY
+    const imagehostkey = import.meta.env.VITE_IMGBB_KEY;
+    // Upload image
+    const url = `https://api.imgbb.com/1/upload?&key=${imagehostkey}`;
+    formData.append("image", data.productImage[0]);
+    fetch(url, {
+      method: "POST",
+      body: formData,
+    })
+      .then((res) => res.json())
+      .then((imgData) => {
+        if (imgData.success) {
+          const imageLink = imgData.data.url;
+          const finalData = {
+            productName: data.productName,
+            productPrice: data.productPrice,
+            marketPrice: data.marketPrice,
+            productImage: imageLink,
+            purchaseDate: data.purchaseDate,
+            productCategory: data.productCategory,
+            productCondition: data.productCondition,
+            productDescription: data.productDesc,
+            sellerName: data.sellerName,
+            sellerImage: user?.photoURL,
+            sellerEmail: data.sellerEmail,
+            sellerPhone: data.sellerPhone,
+            sellerLocation: data.sellerLocation,
+            sellerVerified: isVerified,
+            postAdded: new Date(),
+            paid: false,
+            advertised: false,
+          };
+
+          // Update data to db
+          const createUrl = import.meta.env.VITE_API + "/products";
+          axios.post(createUrl, finalData).then((res) => {
+            if (res.data.acknowledged) {
+              reset();
+              setLoading(false);
+              toast.success("Product added successfully");
+            }
+          });
+        }
+      });
+  };
   return (
     <div className="p-2 md:p-5">
       <h2 className="text-xl  mb-10 pl-2 border-l-4 border-primary ">
@@ -324,7 +383,9 @@ const AddProduct = () => {
             </div>
           </div>
 
-          <PrimaryButton>Add Product</PrimaryButton>
+          <PrimaryButton>
+            {loading ? <SmallLoading /> : "Add Product"}
+          </PrimaryButton>
         </form>
       </div>
     </div>
