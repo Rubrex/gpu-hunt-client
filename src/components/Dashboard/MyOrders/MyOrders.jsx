@@ -2,8 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Table } from "flowbite-react";
 import React, { useContext } from "react";
+import { PhotoProvider, PhotoView } from "react-photo-view";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import Loading from "../../Shared/Loading/Loading";
+import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
@@ -11,8 +13,7 @@ const MyOrders = () => {
   const { data: buyerOrders, isLoading } = useQuery({
     queryKey: ["buyerOrders"],
     queryFn: async () => {
-      const url =
-        import.meta.env.VITE_API + "/products/myProducts/" + user?.email;
+      const url = import.meta.env.VITE_API + "/orders/" + user?.email;
       const response = await axios.get(url);
 
       return response.data;
@@ -42,39 +43,50 @@ const MyOrders = () => {
           <Table.HeadCell>Delete</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          {buyerOrders.map((product, index) => {
+          {buyerOrders.map((order, index) => {
             return (
-              <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
-                <Table.Cell>1</Table.Cell>
+              <Table.Row
+                key={order._id}
+                className="bg-white dark:border-gray-700 dark:bg-gray-800"
+              >
+                <Table.Cell>{++index}</Table.Cell>
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                  {product.productName}
+                  <PhotoProvider>
+                    <PhotoView src={order.productImage}>
+                      {/* Product Image */}
+                      <img
+                        className="w-11 h-11 object-cover  rounded-md "
+                        src={order.productImage}
+                        alt=""
+                      />
+                    </PhotoView>
+                  </PhotoProvider>
                 </Table.Cell>
                 <Table.Cell>
-                  $
-                  <span className="text-lg font-medium">
-                    {product.productPrice}
+                  <span className="text-md font-medium">
+                    {order.productName}
                   </span>
                 </Table.Cell>
                 <Table.Cell>
-                  {product.paid ? (
-                    <span className="text-yellow-500 font-medium">Sold</span>
-                  ) : (
-                    <span className="text-green-500 font-medium">
-                      Available
-                    </span>
-                  )}
+                  <span className="">
+                    ${" "}
+                    <span className="text-lg font-medium">
+                      {order.productPrice}
+                    </span>{" "}
+                  </span>
                 </Table.Cell>
                 <Table.Cell>
-                  {product.advertised ? (
+                  {order.paid ? (
                     <PrimaryButton disabled className="bg-gray-400">
-                      Advertised
+                      Paid
                     </PrimaryButton>
                   ) : (
                     <PrimaryButton className="bg-blue-400 active:bg-blue-500 ring-blue-400">
-                      Advertise
+                      Pay
                     </PrimaryButton>
                   )}
                 </Table.Cell>
+
                 <Table.Cell>
                   <PrimaryButton>X</PrimaryButton>
                 </Table.Cell>
