@@ -164,7 +164,7 @@ const AddProduct = () => {
                 htmlFor="purchaseDate"
                 className="font-medium mb-2 text-sm"
               >
-                Upload Your Profile Picture
+                Product Image
               </label>
               <input
                 className=" w-full text-gray-900 border border-gray-300  cursor-pointer bg-gray-50 dark:text-gray-400 outline-none rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
