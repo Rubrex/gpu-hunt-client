@@ -10,7 +10,11 @@ import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 const MyOrders = () => {
   const { user } = useContext(AuthContext);
 
-  const { data: buyerOrders, isLoading } = useQuery({
+  const {
+    data: buyerOrders,
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["buyerOrders"],
     queryFn: async () => {
       const url = import.meta.env.VITE_API + "/orders/" + user?.email;
@@ -20,7 +24,17 @@ const MyOrders = () => {
     },
   });
 
-  console.log(buyerOrders, isLoading);
+  const handlePay = (productId) => {
+    // Pay Here with card then initiate below patch request
+
+    const payUrl = import.meta.env.VITE_API + "/orders/" + productId;
+    axios.patch(payUrl).then((response) => {
+      if (response.data.modifiedCount) {
+        refetch();
+      }
+    });
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -81,7 +95,10 @@ const MyOrders = () => {
                       Paid
                     </PrimaryButton>
                   ) : (
-                    <PrimaryButton className="bg-blue-400 active:bg-blue-500 ring-blue-400">
+                    <PrimaryButton
+                      onClick={() => handlePay(order.productId)}
+                      className="bg-blue-400 active:bg-blue-500 ring-blue-400"
+                    >
                       Pay
                     </PrimaryButton>
                   )}
