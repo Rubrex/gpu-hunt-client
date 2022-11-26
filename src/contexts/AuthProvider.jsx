@@ -47,18 +47,12 @@ const AuthProvider = ({ children }) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser === null || currentUser.email) {
         setUser(currentUser);
-        //   set user Role
-        const roleUrl =
-          import.meta.env.VITE_API + "/users/role/" + currentUser.email;
-        axios.get(roleUrl).then((response) => setRole(response.data));
       }
       setIsLoading(false);
     });
 
     return () => unsubscribe();
   }, []);
-
-  // Get user role
 
   const providerValue = {
     user,

@@ -1,11 +1,18 @@
 import React, { useContext } from "react";
-import { NavLink, Outlet, useNavigation } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import GpuHuntFooter from "../../components/Shared/GpuHuntFooter/GpuHuntFooter";
 import GpuHuntNavbar from "../../components/Shared/GpuHuntNavbar/GpuHuntNavbar";
+import Loading from "../../components/Shared/Loading/Loading";
 import { AuthContext } from "../../contexts/AuthProvider";
+import useRole from "../../hooks/useRole";
 
 const DashboardLayout = () => {
-  const { role } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
+  const [role, roleLoading] = useRole(user?.email);
+
+  if (roleLoading) {
+    return <Loading />;
+  }
 
   return (
     <>
