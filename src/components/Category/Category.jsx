@@ -12,25 +12,29 @@ const Category = () => {
 
   const productDetails = useLoaderData();
 
+  console.log(productDetails);
   // Handle Modal
   const onClose = () => {
     console.log("Modal triggered");
     setShowModal(false);
   };
 
-  useTitleChange(productDetails[0].productCategory);
+  useTitleChange(productDetails[0]?.productCategory);
 
   return (
     <div>
       <h2 className="text-xl font-bold my-10  pl-2 border-l-4 border-primary">
-        {productDetails[0].productCategory}
+        {productDetails[0]?.productCategory}
       </h2>
       {/* Display Products */}
       <section className="mb-32 mt-10">
         {/* Categories  */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-7">
+          {productDetails.length === 0 && (
+            <h2 className="text-2xl">No Products Found</h2>
+          )}
           {productDetails &&
-            productDetails.map((eachProduct) => (
+            productDetails?.map((eachProduct) => (
               <ProductCard
                 key={eachProduct._id}
                 setShowModal={() => setShowModal(!showModal)}
