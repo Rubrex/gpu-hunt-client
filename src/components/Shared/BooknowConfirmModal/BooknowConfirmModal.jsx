@@ -1,10 +1,16 @@
 import { Modal } from "flowbite-react";
-import React from "react";
+import React, { useContext } from "react";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 import { TiTick } from "react-icons/ti";
 import { PhotoProvider, PhotoView } from "react-photo-view";
+import { AuthContext } from "../../../contexts/AuthProvider";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   // get displayName, user email from context api
 
   //   Get Seller Info
@@ -24,13 +30,42 @@ const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
     addedDate,
     purchaseDate,
     marketPrice,
-    sold,
+    paid,
     advertised,
   } = modalProduct;
 
   //   On submit
   const onSubmit = (event) => {
     event.preventDefault();
+    const cellNumber = event.target.cellNumber.value;
+    const meetLocation = event.target.meetLocation.value;
+    // Submit Order / Booking
+    const order = {
+      buyerEmail: user?.email,
+      productId: _id,
+      productImage,
+      productName,
+      productPrice,
+      cellNumber,
+      meetLocation,
+      paid,
+    };
+    // Submit to DB
+    const orderUrl = import.meta.env.VITE_API + "/orders";
+    axios
+      .post(orderUrl, order)
+      .then((response) => {
+        console.log(response);
+        if (response.status === 200) {
+          toast.success("Order Placed");
+          navigate("/dashboard/myorders");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    console.log(order);
     // Close Modal
     onClose();
     return;
@@ -42,7 +77,7 @@ const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
         {/* <Modal.Header>Terms of Service</Modal.Header> */}
         <Modal.Body>
           <div className="absolute -top-2 -right-2">
-            <PrimaryButton>X</PrimaryButton>
+            <PrimaryButton onClick={onClose}>X</PrimaryButton>
           </div>
           <div className="space-y-6">
             {/* Product Image and info */}
@@ -79,7 +114,7 @@ const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
             <div className="grid grid-cols-1 lg:grid-cols-2">
               <div>
                 {/* Seller Info */}
-                <h1 className="text-3xl font-light">Seller Info</h1>
+                <h1 className="text-3xl font-light mb-4">Seller Info</h1>
                 <p className="font-medium text-bgColor flex items-center ">
                   {sellerName}{" "}
                   {sellerVerified && (
@@ -95,13 +130,41 @@ const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
 
               <div>
                 {/* Buyer Info */}
-                <h1 className="text-3xl font-light">Buyer Info</h1>
+                <h1 className="text-3xl font-light mb-4">Buyer Info</h1>
                 <p className="font-medium text-bgColor flex items-center ">
-                  Rubel Hossain
+                  {user?.displayName}
                 </p>
-                <p>Email: rubel@hossail.com</p>
-                <p>Cell Number: +8801980728221</p>
-                <p>Meeting Location: NorthBadda</p>
+                <p>Email: {user?.email}</p>
+                <div className="grid grid-cols-6 items-center">
+                  <label
+                    htmlFor="cellNumber"
+                    className="font-medium mb-2 text-sm col-span-2"
+                  >
+                    Cell Number:
+                  </label>
+                  <input
+                    id="cellNumber"
+                    type="text"
+                    name="cellNumber"
+                    className="py-1 px-3 outline-none rounded-lg border border-gray-300  cursor-pointer bg-gray-50 col-span-4 "
+                    required
+                  />
+                </div>
+                <div className="grid grid-cols-6 items-center">
+                  <label
+                    htmlFor="meetLocation"
+                    className="font-medium mb-2 text-sm col-span-2"
+                  >
+                    Meeting Location:
+                  </label>
+                  <input
+                    id="meetLocation"
+                    type="text"
+                    name="meetLocation"
+                    required
+                    className="py-1 px-3 outline-none rounded-lg border border-gray-300  cursor-pointer bg-gray-50 col-span-4"
+                  />
+                </div>
               </div>
             </div>
           </div>
