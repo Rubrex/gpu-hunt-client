@@ -67,8 +67,18 @@ const MyProducts = () => {
                 </Table.Cell>
                 <Table.Cell>
                   {product.advertised ? (
-                    <PrimaryButton disabled className="bg-gray-400">
+                    <PrimaryButton
+                      disabled
+                      className="bg-gray-400 active:bg-gray-400"
+                    >
                       Advertised
+                    </PrimaryButton>
+                  ) : product.paid ? (
+                    <PrimaryButton
+                      disabled
+                      className="bg-gray-400 active:bg-gray-400"
+                    >
+                      Advertise
                     </PrimaryButton>
                   ) : (
                     <PrimaryButton className="bg-blue-400 active:bg-blue-500 ring-blue-400">
