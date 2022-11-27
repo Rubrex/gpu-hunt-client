@@ -5,7 +5,7 @@ import BooknowConfirmModal from "../Shared/BooknowConfirmModal/BooknowConfirmMod
 import NoProductsFound from "../Shared/NoProductsFound/NoProductsFound";
 import ProductCard from "../Shared/ProductCard/ProductCard";
 
-const Category = () => {
+const Products = () => {
   // State
   const [showModal, setShowModal] = useState(false);
   const [modalProduct, setModalProduct] = useState({});
@@ -28,7 +28,7 @@ const Category = () => {
   return (
     <div>
       <h2 className="text-xl font-bold my-10  pl-2 border-l-4 border-primary">
-        {productDetails[0]?.productCategory}
+        All Products
       </h2>
       {/* Display Products */}
       <section className="mb-32 mt-10">
@@ -57,4 +57,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default Products;

@@ -1,5 +1,5 @@
 import React from "react";
-import emptyProduct from "../../assets/images/icons/noProducts.png";
+import emptyProduct from "../../../assets/images/icons/noProducts.png";
 
 const NoProductsFound = () => {
   return (

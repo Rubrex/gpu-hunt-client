@@ -14,6 +14,7 @@ import MyProducts from "../components/Dashboard/MyProducts/MyProducts";
 import MyWishLists from "../components/Dashboard/MyWishLists/MyWishLists";
 import ReportedItems from "../components/Dashboard/ReportedItems/ReportedItems";
 import Home from "../components/Home/Home";
+import Products from "../components/Products/Products";
 import ErrorPage from "../components/Shared/ErrorPage/ErrorPage";
 import DashboardLayout from "../layout/DashboardLayout/DashboardLayout";
 import MainLayout from "../layout/MainLayout/MainLayout";
@@ -31,6 +32,15 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
+      },
+      {
+        path: "/products",
+        element: <Products />,
+        loader: async () => {
+          const url = import.meta.env.VITE_API + "/products";
+          const categoryResponse = await axios.get(url);
+          return categoryResponse.data;
+        },
       },
       {
         path: "/blogs",

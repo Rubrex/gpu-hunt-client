@@ -44,6 +44,9 @@ const GpuHuntNavbar = () => {
         <NavLink className="hover:text-primary" to="/">
           Home
         </NavLink>
+        <NavLink className="hover:text-primary" to="/products">
+          Products
+        </NavLink>
         {user?.email && (
           <NavLink className="hover:text-primary" to="/dashboard">
             Dashboard
