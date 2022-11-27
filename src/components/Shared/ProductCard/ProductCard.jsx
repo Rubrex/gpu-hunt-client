@@ -10,9 +10,20 @@ import { Tooltip } from "flowbite-react";
 import { format } from "date-fns";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import useRole from "../../../hooks/useRole";
+import Loading from "../Loading/Loading";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   const { user } = useContext(AuthContext);
+  let [role, roleLoading] = useRole(user?.email);
+  if (!user?.email) {
+    roleLoading = false;
+  }
+  console.log(role, roleLoading);
+  if (roleLoading) {
+    return <Loading />;
+  }
   const {
     _id,
     productImage,
@@ -42,7 +53,7 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   };
 
   const shortenDesc = (text) => {
-    return text.slice(0, 80);
+    return text.slice(0, 70);
   };
 
   // Report to admin
@@ -70,7 +81,7 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
             <PhotoView src={productImage}>
               {/* Product Image */}
               <img
-                className="max-h-[120px] lg:max-h-[150px] w-full object-cover mb-5 rounded-md "
+                className="h-[150px] w-full object-cover mb-5 rounded-md "
                 src={productImage}
                 alt=""
               />
@@ -92,7 +103,7 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
           <div className="flex items-center gap-4">
             <img
               src={sellerImage ? sellerImage : defaultProfileImage}
-              className="max-w-[30px] lg:max-w-[45px] rounded-md"
+              className="w-11 h-11 object-cover rounded-md"
               alt="user image"
             />
             <div>
@@ -117,15 +128,23 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
           <div className="text-sm relative">
             {/*  Report to admin */}
             <div className="absolute top-0 right-0">
-              <Tooltip content="Report to admin" placement="left">
-                <button
-                  onClick={() =>
-                    handleReportAdmin(user?.email, _id, productName)
-                  }
-                >
-                  <MdReport className="text-4xl bg-gray-100 hover:bg-orange-100 rounded-md p-2 text-primary" />
-                </button>
-              </Tooltip>
+              {role ? (
+                <Tooltip content="Report to admin" placement="left">
+                  <button
+                    onClick={() =>
+                      handleReportAdmin(user?.email, _id, productName)
+                    }
+                  >
+                    <MdReport className="text-4xl bg-gray-100 hover:bg-orange-100 rounded-md p-2 text-primary" />
+                  </button>
+                </Tooltip>
+              ) : (
+                <Tooltip content="Login to report" placement="left">
+                  <button disabled>
+                    <MdReport className="text-4xl bg-gray-300  rounded-md p-2 text-white" />
+                  </button>
+                </Tooltip>
+              )}
             </div>
             <p>
               Condition:{" "}
@@ -144,7 +163,17 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
 
           {/* Booking , wishlist */}
           <div className="flex justify-between mt-5">
-            <PrimaryButton onClick={openBookingModal}>BookNow</PrimaryButton>
+            {role === "seller" || role === "admin" ? (
+              <PrimaryButton disabled className="active:bg-gray-500">
+                BookNow
+              </PrimaryButton>
+            ) : role === false ? (
+              <Link to="/login">
+                <PrimaryButton>BookNow</PrimaryButton>
+              </Link>
+            ) : (
+              <PrimaryButton onClick={openBookingModal}>BookNow</PrimaryButton>
+            )}
 
             <button>
               <Tooltip content="Add to wishlist" placement="top">
