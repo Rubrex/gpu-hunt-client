@@ -83,6 +83,7 @@ const Register = () => {
                 // Uploading User info to DB
                 axios
                   .post(import.meta.env.VITE_API + "/users", {
+                    name: userName,
                     email,
                     password,
                     role,

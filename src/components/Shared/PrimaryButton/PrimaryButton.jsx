@@ -12,10 +12,11 @@ const PrimaryButton = ({
       type={type ? type : ""}
       onClick={onClick}
       disabled={disabled}
-      className={` active:bg-orange-600 transition-all text-white py-1 px-3 rounded-md border-2 border-white
-      ${!disabled && "hover:ring-2"}
+      className={`
       ${disabled ? "bg-gray-200" : "bg-primary"}
-      ring-primary font-medium ${className}`}
+      ${!disabled && "hover:ring-2"}
+       active:bg-orange-600 ring-primary transition-all text-white py-1 px-3 rounded-md border-2 border-white
+       font-medium ${className}`}
     >
       {children}
     </button>
