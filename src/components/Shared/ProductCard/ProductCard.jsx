@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { TiTick } from "react-icons/ti";
 import { PhotoProvider, PhotoView } from "react-photo-view";
 import priceTagImage from "../../../assets/images/icons/priceTag.png";
@@ -8,8 +8,11 @@ import { BsBookmarkCheck, BsFillBookmarkCheckFill } from "react-icons/bs";
 import { MdReport } from "react-icons/md";
 import { Tooltip } from "flowbite-react";
 import { format } from "date-fns";
+import axios from "axios";
+import { AuthContext } from "../../../contexts/AuthProvider";
 
 const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
+  const { user } = useContext(AuthContext);
   const {
     _id,
     productImage,
@@ -40,6 +43,20 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
 
   const shortenDesc = (text) => {
     return text.slice(0, 80);
+  };
+
+  // Report to admin
+  const handleReportAdmin = (email, productId) => {
+    const url = `${import.meta.env.VITE_API}/users`;
+    axios
+      .put(url, {
+        email: email,
+        productId: productId,
+        reason: "This seller is fraud",
+      })
+      .then((resposnse) => {
+        console.log(resposnse.data);
+      });
   };
 
   return (
@@ -100,7 +117,7 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
             {/*  Report to admin */}
             <div className="absolute top-0 right-0">
               <Tooltip content="Report to admin" placement="left">
-                <button>
+                <button onClick={() => handleReportAdmin(user?.email, _id)}>
                   <MdReport className="text-4xl bg-gray-100 hover:bg-orange-100 rounded-md p-2 text-primary" />
                 </button>
               </Tooltip>
