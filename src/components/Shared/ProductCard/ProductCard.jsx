@@ -24,7 +24,7 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
     sellerImage,
     sellerPhone,
     sellerEmail,
-    sellerVerified,
+    verified,
     sellerLocation,
     postAdded,
     purchaseDate,
@@ -97,7 +97,7 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
             <div>
               <p className="font-medium text-bgColor flex items-center ">
                 {sellerName}{" "}
-                {sellerVerified && (
+                {verified && (
                   <span>
                     <TiTick className="p-[2px] text-blue-600 bg-gray-200 ml-2 rounded-full  text-lg" />
                   </span>
