@@ -24,8 +24,8 @@ const AllSellers = () => {
   }
 
   // handle verify
-  const handleVerify = (id) => {
-    const verifyUrl = import.meta.env.VITE_API + "/users/sellers/" + id;
+  const handleVerify = (email) => {
+    const verifyUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
     axios.put(verifyUrl).then((response) => {
       if (response.data.matchedCount) {
         console.log(response.data);
@@ -97,7 +97,7 @@ const AllSellers = () => {
                     </PrimaryButton>
                   ) : (
                     <PrimaryButton
-                      onClick={() => handleVerify(seller._id)}
+                      onClick={() => handleVerify(seller.email)}
                       className="bg-blue-400 active:bg-blue-500 ring-blue-400"
                     >
                       Verify
