@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import toast from "react-hot-toast";
 import { Link, useRouteError } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import "./ErrorPage.css";
+import styles from "./ErrorPage.module.css";
 
 const ErrorPage = () => {
   const { logOut } = useContext(AuthContext);
@@ -19,25 +19,27 @@ const ErrorPage = () => {
       });
   };
   return (
-    <section className="page_404 mt-10">
-      <h1 className="text-3xl">Something Went Wrong</h1>
+    <section className={`${styles.page_404} mt-10`}>
+      <h1 className="text-3xl text-center font-bold">Something Went Wrong</h1>
 
-      <section className="error-container">
-        <span className="four">
-          <span className="screen-reader-text">4</span>
+      <section className={`${styles.errorContainer}`}>
+        <span className={styles.four}>
+          <span className={styles.screenReaderText}>4</span>
         </span>
-        <span className="zero">
-          <span className="screen-reader-text">0</span>
+        <span className={styles.zero}>
+          <span className={styles.screenReaderText}>0</span>
         </span>
-        <span className="four">
-          <span className="screen-reader-text">4</span>
+        <span className={styles.four}>
+          <span className={styles.screenReaderText}>4</span>
         </span>
       </section>
-      <p className="zoom-area">
-        <b className="text-xl">{error.statusText} </b>
+      <p className={styles.zoomArea}>
+        <b className="text-xl py-2 px-4 border-2 border-primary text-primary uppercase">
+          {error.statusText}{" "}
+        </b>
       </p>
-      <div className="link-container ">
-        <Link to="/" className="more-link bg-primary">
+      <div className={styles.linkContainer}>
+        <Link to="/" className={`${styles.moreLink} bg-primary`}>
           Visit Home Page
         </Link>
       </div>
