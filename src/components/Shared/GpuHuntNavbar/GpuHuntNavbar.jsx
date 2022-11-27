@@ -35,19 +35,25 @@ const GpuHuntNavbar = () => {
               {role && (
                 <div className="flex items-center gap-5">
                   {(role === "user" && (
-                    <span className="font-bold">User Account</span>
+                    <span className="font-bold pl-3 pr-8 -mr-8 py-1  bg-gray-100 rounded-md">
+                      User Account
+                    </span>
                   )) ||
                     (role === "seller" && (
-                      <span className="font-bold">Seller Account</span>
+                      <span className="font-bold pl-3 pr-8 -mr-8 py-1  bg-gray-100 rounded-md">
+                        Seller Account
+                      </span>
                     )) ||
                     (role === "admin" && (
-                      <span className="font-bold">Admin Account</span>
+                      <span className="font-bold pl-3 pr-8 -mr-8 py-1  bg-gray-100 rounded-md">
+                        Admin Account
+                      </span>
                     ))}
                   {/* Toggle dropdown */}
                   <div className="relative">
                     <img
                       src={user.photoURL}
-                      className="w-9 h-9 object-cover rounded-full ring-offset-2 ring-2 hover:ring-primary cursor-pointer transition-all "
+                      className="w-10 h-10 object-cover rounded-full ring-gray-400 ring-offset-2 ring-2 hover:ring-primary cursor-pointer transition-all "
                       alt=""
                       onClick={() => setToggleDropdown(!toggleDropdown)}
                       data-dropdown-toggle="dropdown"
