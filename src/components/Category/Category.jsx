@@ -4,6 +4,7 @@ import useTitleChange from "../../hooks/useTitle";
 import BooknowConfirmModal from "../Shared/BooknowConfirmModal/BooknowConfirmModal";
 import PrimaryButton from "../Shared/PrimaryButton/PrimaryButton";
 import ProductCard from "../Shared/ProductCard/ProductCard";
+import NoProductsFound from "./NoProductsFound";
 
 const Category = () => {
   // State
@@ -21,6 +22,10 @@ const Category = () => {
 
   useTitleChange(productDetails[0]?.productCategory);
 
+  if (productDetails.length === 0) {
+    return <NoProductsFound />;
+  }
+
   return (
     <div>
       <h2 className="text-xl font-bold my-10  pl-2 border-l-4 border-primary">
@@ -30,9 +35,6 @@ const Category = () => {
       <section className="mb-32 mt-10">
         {/* Categories  */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-7">
-          {productDetails.length === 0 && (
-            <h2 className="text-2xl">No Products Found</h2>
-          )}
           {productDetails &&
             productDetails?.map((eachProduct) => (
               <ProductCard

@@ -19,15 +19,15 @@ const Categories = () => {
   }
 
   return (
-    <section className="mb-32">
-      <h2 className="text-3xl font-bold mb-10">
+    <section className="mb-32 ">
+      <h2 className="text-3xl font-bold mb-16">
         <span className="relative z-10">
           <img src={underLine} alt="" className="absolute -bottom-3  -z-10" />
           Categories
         </span>
       </h2>
       {/* Categories  */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-10 ml-10">
         {categories.map((category) => (
           <Link
             to={`/category/${category.category}`}
