@@ -20,7 +20,6 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   if (!user?.email) {
     roleLoading = false;
   }
-  console.log(role, roleLoading);
   if (roleLoading) {
     return <Loading />;
   }

@@ -12,9 +12,9 @@ const useRole = (email) => {
       const roleUrl = import.meta.env.VITE_API + "/users/role/" + email;
       axios.get(roleUrl).then((response) => {
         setRole(response.data);
-        setRoleLoading(false);
       });
     }
+    setRoleLoading(false);
   }, [email]);
   return [role, roleLoading];
 };

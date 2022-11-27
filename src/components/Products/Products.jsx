@@ -12,7 +12,6 @@ const Products = () => {
 
   const productDetails = useLoaderData();
 
-  console.log(productDetails);
   // Handle Modal
   const onClose = () => {
     console.log("Modal triggered");
