@@ -1,11 +1,11 @@
-## Website Title GPUHunt
+## GPUHunt
+
+### Live Link: https://gpuhunt-93470.web.app/
 
 ## Admin Access
 
-email: rubel.hossain@gpuhunt.com
+email: admin@gpuhunt.com
 pass : 123Asd\*
-
-## Live Link:
 
 ## Features and Functionalities:
 
