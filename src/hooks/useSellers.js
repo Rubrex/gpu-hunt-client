@@ -12,7 +12,6 @@ const useSellers = (email) => {
 
       axios.get(url).then((response) => {
         // If the role is seller then continue
-
         if (response.data === "seller") {
           setIsSeller(true);
         } else {
