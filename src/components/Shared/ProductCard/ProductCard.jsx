@@ -46,12 +46,13 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   };
 
   // Report to admin
-  const handleReportAdmin = (email, productId) => {
-    const url = `${import.meta.env.VITE_API}/users`;
+  const handleReportAdmin = (email, productId, productName) => {
+    const url = `${import.meta.env.VITE_API}/reports`;
     axios
       .put(url, {
-        email: email,
-        productId: productId,
+        email,
+        productId,
+        productName,
         reason: "This seller is fraud",
       })
       .then((resposnse) => {
@@ -117,7 +118,11 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
             {/*  Report to admin */}
             <div className="absolute top-0 right-0">
               <Tooltip content="Report to admin" placement="left">
-                <button onClick={() => handleReportAdmin(user?.email, _id)}>
+                <button
+                  onClick={() =>
+                    handleReportAdmin(user?.email, _id, productName)
+                  }
+                >
                   <MdReport className="text-4xl bg-gray-100 hover:bg-orange-100 rounded-md p-2 text-primary" />
                 </button>
               </Tooltip>

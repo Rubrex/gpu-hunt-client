@@ -2,19 +2,20 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Table } from "flowbite-react";
 import React from "react";
+import toast from "react-hot-toast";
 import Loading from "../../Shared/Loading/Loading";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 
 const ReportedItems = () => {
   const {
-    data: allSellers,
+    data: allReports,
     isLoading,
     refetch,
   } = useQuery({
     queryKey: ["allSellers"],
     queryFn: async () => {
-      const allsellersUrl = import.meta.env.VITE_API + "/users/sellers";
-      const res = await axios.get(allsellersUrl);
+      const allreports = import.meta.env.VITE_API + "/reports";
+      const res = await axios.get(allreports);
       return res.data;
     },
   });
@@ -23,22 +24,14 @@ const ReportedItems = () => {
     return <Loading />;
   }
 
-  // handle verify
-  const handleVerify = (email) => {
-    const verifyUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
-    axios.put(verifyUrl).then((response) => {
-      if (response.data.matchedCount) {
-        console.log(response.data);
-        refetch();
-      }
-    });
-  };
   // handle delete
-  const handleDelete = (email) => {
-    const deleteUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
+  const handleDelete = (pId) => {
+    const deleteUrl = import.meta.env.VITE_API + "/reports/" + pId;
+    console.log(deleteUrl);
     axios.delete(deleteUrl).then((response) => {
       if (response.data.deletedCount) {
         console.log(response.data);
+        toast.success("Removed reported product");
         refetch();
       }
     });
@@ -56,56 +49,27 @@ const ReportedItems = () => {
           <Table.HeadCell>
             <span className="sr-only">Index</span>
           </Table.HeadCell>
-          <Table.HeadCell>Seller name</Table.HeadCell>
-          <Table.HeadCell>Email</Table.HeadCell>
-          <Table.HeadCell>Verify</Table.HeadCell>
+          <Table.HeadCell>Item</Table.HeadCell>
+          <Table.HeadCell>Reported By</Table.HeadCell>
+          <Table.HeadCell>Reason</Table.HeadCell>
           <Table.HeadCell>Delete</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
-          {allSellers.map((seller, index) => {
+          {allReports.map((report, index) => {
             return (
               <Table.Row
-                key={seller._id}
+                key={report._id}
                 className="bg-white dark:border-gray-700 dark:bg-gray-800"
               >
-                <Table.Cell>
-                  <div
-                    className="delete-button"
-                    onClick={() => {
-                      if (
-                        window.confirm(
-                          "Are you sure you wish to delete this item?"
-                        )
-                      )
-                        this.onCancel(item);
-                    }}
-                  />
-                  {++index}
-                </Table.Cell>
+                <Table.Cell>{++index}</Table.Cell>
                 <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                  {seller.name}
+                  {report.productName}
                 </Table.Cell>
-                <Table.Cell>{seller.email}</Table.Cell>
+                <Table.Cell>{report.reportedBy}</Table.Cell>
 
+                <Table.Cell>{report.reason}</Table.Cell>
                 <Table.Cell>
-                  {seller.verified ? (
-                    <PrimaryButton
-                      disabled
-                      className="bg-gray-400 active:bg-gray-400"
-                    >
-                      Verified
-                    </PrimaryButton>
-                  ) : (
-                    <PrimaryButton
-                      onClick={() => handleVerify(seller.email)}
-                      className="bg-blue-400 active:bg-blue-500 ring-blue-400"
-                    >
-                      Verify
-                    </PrimaryButton>
-                  )}
-                </Table.Cell>
-                <Table.Cell>
-                  <PrimaryButton onClick={() => handleDelete(seller.email)}>
+                  <PrimaryButton onClick={() => handleDelete(report.productId)}>
                     X
                   </PrimaryButton>
                 </Table.Cell>
