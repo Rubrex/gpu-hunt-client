@@ -9,7 +9,10 @@ pass : 123Asd\*
 
 ## Features and Functionalities:
 
--
+- Seller able to post new product
+- Seller can manage his/her products
+- Admin can remove seller/buyers account or reported products
+- Buyer can report product and buy products
 
 ### Technologies used
 

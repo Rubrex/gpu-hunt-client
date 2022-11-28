@@ -23,38 +23,71 @@ const DashboardLayout = () => {
               {role === "user" && (
                 <>
                   <li className="bg-gray-100 w-full text-center p-2">
-                    <NavLink to="/dashboard/myorders">My Orders</NavLink>
+                    <NavLink
+                      to="/dashboard/myorders"
+                      className="w-full font-medium flex"
+                    >
+                      My Orders
+                    </NavLink>
                   </li>
-                  <li className="bg-gray-100 w-full text-center p-2">
+                  {/* <li className="bg-gray-100 w-full text-center p-2">
                     <NavLink to="/dashboard/mywishlists">My Wishlists</NavLink>
-                  </li>
+                  </li> */}
                 </>
               )}
               {/* Seller Role Routes */}
               {role === "seller" && (
                 <>
                   <li className="bg-gray-100 w-full text-center p-2">
-                    <NavLink to="/dashboard/addproduct">Add Product</NavLink>
+                    <NavLink
+                      to="/dashboard/addproduct"
+                      className="w-full font-medium flex"
+                    >
+                      Add Product
+                    </NavLink>
                   </li>
                   <li className="bg-gray-100 w-full text-center p-2">
-                    <NavLink to="/dashboard/myproducts">My Products</NavLink>
+                    <NavLink
+                      to="/dashboard/myproducts"
+                      className="w-full font-medium flex"
+                    >
+                      My Products
+                    </NavLink>
                   </li>
-                  <li className="bg-gray-100 w-full text-center p-2">
-                    <NavLink to="/dashboard/mybuyers">My Buyers</NavLink>
-                  </li>
+                  {/* <li className="bg-gray-100 w-full text-center p-2">
+                    <NavLink
+                      to="/dashboard/mybuyers"
+                      className="w-full font-medium flex"
+                    >
+                      My Buyers
+                    </NavLink>
+                  </li> */}
                 </>
               )}
               {/* Admin Role Routes */}
               {role === "admin" && (
                 <>
                   <li className="bg-gray-100 w-full text-center p-2">
-                    <NavLink to="/dashboard/allsellers">All Sellers</NavLink>
+                    <NavLink
+                      to="/dashboard/allsellers"
+                      className="w-full font-medium flex"
+                    >
+                      All Sellers
+                    </NavLink>
                   </li>
                   <li className="bg-gray-100 w-full text-center p-2">
-                    <NavLink to="/dashboard/allbuyers">All Buyers</NavLink>
+                    <NavLink
+                      to="/dashboard/allbuyers"
+                      className="w-full font-medium flex"
+                    >
+                      All Buyers
+                    </NavLink>
                   </li>
                   <li className="bg-gray-100 w-full text-center p-2">
-                    <NavLink to="/dashboard/reporteditems">
+                    <NavLink
+                      to="/dashboard/reporteditems"
+                      className="w-full font-medium flex"
+                    >
                       Reported Items
                     </NavLink>
                   </li>
