@@ -18,7 +18,7 @@ const useUser = (email) => {
         })
         .then((response) => {
           // If the role is user continue
-          if (response.data === "user") {
+          if (response.data.role === "user") {
             setIsUser(true);
           } else {
             setIsUser(false);

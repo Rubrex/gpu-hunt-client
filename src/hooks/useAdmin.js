@@ -21,7 +21,7 @@ const useAdmin = (email) => {
           },
         })
         .then((response) => {
-          if (response.data === "admin") {
+          if (response.data.role === "admin") {
             setIsAdmin(true);
           } else {
             setIsAdmin(false);

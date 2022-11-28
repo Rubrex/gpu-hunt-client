@@ -17,7 +17,7 @@ const useRole = (email) => {
           },
         })
         .then((response) => {
-          setRole(response.data);
+          setRole(response.data.role);
         });
     }
     setRoleLoading(false);

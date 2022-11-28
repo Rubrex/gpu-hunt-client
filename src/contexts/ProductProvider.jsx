@@ -9,7 +9,7 @@ const ProductProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const [role, roleLoading] = useRole(user?.email);
 
-  if (roleLoading || role === false) {
+  if (roleLoading) {
     return <Loading />;
   }
 

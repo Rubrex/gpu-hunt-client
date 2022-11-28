@@ -18,7 +18,7 @@ const useSellers = (email) => {
         })
         .then((response) => {
           // If the role is seller then continue
-          if (response.data === "seller") {
+          if (response.data.role === "seller") {
             setIsSeller(true);
           } else {
             setIsSeller(false);
