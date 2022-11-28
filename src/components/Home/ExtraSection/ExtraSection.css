@@ -1,0 +1,68 @@
+.blur_bg {
+  background: rgb(218, 218, 218);
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.877),
+    rgba(38, 167, 150, 0.644)
+  );
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 90px 60px;
+  height: 100%;
+}
+
+.contributions {
+  background-image: url("https://static.tweaktown.com/news/8/7/87210_505_the-latest-geforce-rtx-4090-rumored-specs-2-75ghz-gpu-clock-450w_full.jpg");
+  background-repeat: no-repeat;
+  background-position: fixed;
+  background-size: cover;
+}
+
+.left_descriptions {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding-right: 30px;
+}
+.left_descriptions h3 {
+  color: rgb(241, 241, 241);
+  padding-bottom: 20px;
+}
+.left_descriptions h1 {
+  color: rgb(245, 245, 245);
+  font-size: 35px;
+  font-weight: 600;
+  padding-bottom: 20px;
+}
+.left_descriptions p {
+  color: rgb(236, 236, 236);
+  padding-bottom: 20px;
+}
+
+.right_icons {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.contribute_icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 25px;
+}
+.contribute_icon img {
+  width: 80px;
+  height: 80px;
+  filter: invert(100);
+}
+.contribute_icon h1 {
+  color: rgb(243, 243, 243);
+}
+.contribute_icon h3 {
+  color: rgb(192, 192, 192);
+}
