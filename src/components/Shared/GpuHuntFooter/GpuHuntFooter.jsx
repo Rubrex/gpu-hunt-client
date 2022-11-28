@@ -15,7 +15,7 @@ const GpuHuntFooter = () => {
                 GPUHunts
               </span>
             </Link>
-            <p className="text-md ml-4 font-medium flex items-center max-w-md">
+            <p className="text-md ml-4 font-medium flex items-center max-w-md mb-10">
               We have the biggest collections of used graphics cards of Gegorce
               GTX, Geforce RTX and AMD Radeon series Graphics cards
             </p>

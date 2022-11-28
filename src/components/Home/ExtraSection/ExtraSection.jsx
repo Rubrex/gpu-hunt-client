@@ -6,7 +6,7 @@ import "./ExtraSection.css";
 const ExtraSection = () => {
   return (
     <section className="contributions mb-32">
-      <div className="blur_bg">
+      <div className="blur_bg grid grid-cols-1 md:grid-cols-2">
         <div className="left_descriptions">
           <h3 className="text-xl">Get Your Card Today</h3>
           <h1 className="text-5xl font-extrabold">
