@@ -58,7 +58,6 @@ const MyOrders = () => {
           <Table.HeadCell>Item</Table.HeadCell>
           <Table.HeadCell>Price</Table.HeadCell>
           <Table.HeadCell>PAY</Table.HeadCell>
-          <Table.HeadCell>Delete</Table.HeadCell>
         </Table.Head>
         <Table.Body className="divide-y">
           {buyerOrders.map((order, index) => {
@@ -106,10 +105,6 @@ const MyOrders = () => {
                       Pay
                     </PrimaryButton>
                   )}
-                </Table.Cell>
-
-                <Table.Cell>
-                  <PrimaryButton>X</PrimaryButton>
                 </Table.Cell>
               </Table.Row>
             );

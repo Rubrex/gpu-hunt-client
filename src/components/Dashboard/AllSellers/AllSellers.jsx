@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Table } from "flowbite-react";
 import React from "react";
+import Swal from "sweetalert2";
 import Loading from "../../Shared/Loading/Loading";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 
@@ -26,18 +27,45 @@ const AllSellers = () => {
   // handle verify
   const handleVerify = (email) => {
     const verifyUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
-    axios.put(verifyUrl).then((response) => {
-      if (response.data.matchedCount) {
-        refetch();
+
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Verify",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.put(verifyUrl).then((response) => {
+          if (response.data.matchedCount) {
+            Swal.fire("Verified", "The user is verified now.", "success");
+            refetch();
+          }
+        });
       }
     });
   };
   // handle delete
   const handleDelete = (email) => {
-    const deleteUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
-    axios.delete(deleteUrl).then((response) => {
-      if (response.data.deletedCount) {
-        refetch();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const deleteUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
+        axios.delete(deleteUrl).then((response) => {
+          if (response.data.deletedCount) {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            refetch();
+          }
+        });
       }
     });
   };

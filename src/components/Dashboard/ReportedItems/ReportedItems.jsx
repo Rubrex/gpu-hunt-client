@@ -3,6 +3,7 @@ import axios from "axios";
 import { Table } from "flowbite-react";
 import React from "react";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 import Loading from "../../Shared/Loading/Loading";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 
@@ -28,10 +29,22 @@ const ReportedItems = () => {
   const handleDelete = (pId) => {
     const deleteUrl = import.meta.env.VITE_API + "/reports/" + pId;
 
-    axios.delete(deleteUrl).then((response) => {
-      if (response.data.deletedCount) {
-        toast.success("Removed reported product");
-        refetch();
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(deleteUrl).then((response) => {
+          if (response.data.deletedCount) {
+            Swal.fire("Deleted!", "Your file has been deleted.", "success");
+            refetch();
+          }
+        });
       }
     });
   };
