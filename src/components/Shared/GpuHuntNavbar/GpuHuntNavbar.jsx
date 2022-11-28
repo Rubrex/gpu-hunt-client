@@ -3,18 +3,13 @@ import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/images/icons/logo.png";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import useRole from "../../../hooks/useRole";
-import Loading from "../Loading/Loading";
+import { ProductContext } from "../../../contexts/ProductProvider";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 const GpuHuntNavbar = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const { user, logOut } = useContext(AuthContext);
-  const [role, roleLoading] = useRole(user?.email);
-
-  if (roleLoading) {
-    return <Loading />;
-  }
+  const { role } = useContext(ProductContext);
   const logoutHandler = () => {
     logOut();
   };
