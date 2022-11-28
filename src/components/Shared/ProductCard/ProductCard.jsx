@@ -10,19 +10,13 @@ import { Tooltip } from "flowbite-react";
 import { format } from "date-fns";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import useRole from "../../../hooks/useRole";
-import Loading from "../Loading/Loading";
 import { Link } from "react-router-dom";
+import { ProductContext } from "../../../contexts/ProductProvider";
 
 const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   const { user } = useContext(AuthContext);
-  let [role, roleLoading] = useRole(user?.email);
-  if (!user?.email) {
-    roleLoading = false;
-  }
-  if (roleLoading) {
-    return <Loading />;
-  }
+  const { role } = useContext(ProductContext);
+
   const {
     _id,
     productImage,
@@ -46,7 +40,6 @@ const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   const formatedDate = format(new Date(parseInt(postAdded)), "PP");
 
   const openBookingModal = () => {
-    console.log("btn triggered");
     setShowModal();
     setModalProduct(productInfo);
   };
