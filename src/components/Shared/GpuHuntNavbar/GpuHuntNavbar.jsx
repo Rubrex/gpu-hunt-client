@@ -1,19 +1,47 @@
+import axios from "axios";
 import { Navbar } from "flowbite-react";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/images/icons/logo.png";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { ProductContext } from "../../../contexts/ProductProvider";
+import useRole from "../../../hooks/useRole";
+import Loading from "../Loading/Loading";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 const GpuHuntNavbar = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const { user, logOut } = useContext(AuthContext);
-  const { role } = useContext(ProductContext);
+  const [role, setRole] = useState("");
+  // const [role, roleLoading] = useRole(user);
+  // const { role } = useContext(ProductContext);
+  // if (roleLoading) {
+  //   return <Loading />;
+  // }
+
+  useEffect(() => {
+    //   set user Role
+    if (user?.email) {
+      const roleUrl = import.meta.env.VITE_API + "/users/role/" + user?.email;
+      console.log(roleUrl);
+      axios
+        .get(roleUrl, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("gpuhunt_token")}`,
+          },
+        })
+        .then((response) => {
+          setRole(response.data.role);
+        });
+    }
+
+    // setRoleLoading(false);
+  }, [user]);
+
   const logoutHandler = () => {
     logOut();
   };
-
+  console.log("Role from nav: ", role);
   return (
     <Navbar fluid={true} rounded={true} className="max-w-6xl mx-auto ">
       <Link className="flex items-center" to="/">

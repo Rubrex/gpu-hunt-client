@@ -1,15 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useRole = (email) => {
+const useRole = (user) => {
   const [role, setRole] = useState(false);
   const [roleLoading, setRoleLoading] = useState(true);
 
   // Get user role
   useEffect(() => {
-    if (email) {
+    if (user?.email) {
       //   set user Role
-      const roleUrl = import.meta.env.VITE_API + "/users/role/" + email;
+      const roleUrl = import.meta.env.VITE_API + "/users/role/" + user?.email;
       axios
         .get(roleUrl, {
           headers: {
@@ -21,7 +21,7 @@ const useRole = (email) => {
         });
     }
     setRoleLoading(false);
-  }, [email]);
+  }, [user]);
   return [role, roleLoading];
 };
 

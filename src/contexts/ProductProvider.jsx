@@ -7,7 +7,7 @@ export const ProductContext = createContext();
 
 const ProductProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
-  const [role, roleLoading] = useRole(user?.email);
+  const [role, roleLoading] = useRole(user);
 
   if (roleLoading) {
     return <Loading />;

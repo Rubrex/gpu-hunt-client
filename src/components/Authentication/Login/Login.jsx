@@ -35,12 +35,12 @@ const Login = () => {
   };
 
   const handleSignin = (email, password) => {
+    setLoginEmail(email);
     logIn(email, password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         if (user) {
-          setLoginEmail(user?.email);
           toast.success(`Welcome back ${user?.displayName}`);
         }
         // ...
