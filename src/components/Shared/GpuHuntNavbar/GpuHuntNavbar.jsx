@@ -114,14 +114,20 @@ const GpuHuntNavbar = () => {
               )}
             </>
           ) : (
-            <>
-              <Link to="/login">
-                <PrimaryButton>Login</PrimaryButton>
+            <div className="self-center">
+              <Link
+                className="bg-primary text-white border-white border hover:bg-orange-700 font-medium rounded"
+                to="/login"
+              >
+                Login
               </Link>
-              <Link to="/register">
-                <PrimaryButton>Register</PrimaryButton>
+              <Link
+                className="bg-primary text-white border-white border hover:bg-orange-700 font-medium rounded"
+                to="/register"
+              >
+                Register
               </Link>
-            </>
+            </div>
           )}
         </div>
         <Navbar.Toggle />
