@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import Loading from "../components/Shared/Loading/Loading";
 import useRole from "../hooks/useRole";
 import { AuthContext } from "./AuthProvider";
@@ -10,7 +10,7 @@ const ProductProvider = ({ children }) => {
   const [role, roleLoading] = useRole(user?.email);
 
   if (roleLoading || role === false) {
-    <Loading />;
+    return <Loading />;
   }
 
   const info = { role };
