@@ -15,8 +15,9 @@ const GpuHuntFooter = () => {
                 GPUHunts
               </span>
             </Link>
-            <p className="text-lg ml-4 font-medium">
-              We are number one graphics card reselling{" "}
+            <p className="text-md ml-4 font-medium flex items-center max-w-md">
+              We have the biggest collections of used graphics cards of Gegorce
+              GTX, Geforce RTX and AMD Radeon series Graphics cards
             </p>
           </div>
           <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
@@ -39,7 +40,7 @@ const GpuHuntFooter = () => {
         </div>
         <Footer.Divider />
         <div className="w-full sm:flex sm:items-center sm:justify-between">
-          <Footer.Copyright href="#" by="BuySell" year={2022} />
+          <Footer.Copyright href="#" by="GPUHunt" year={2022} />
           <div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
             {/* <Footer.Icon href="#" icon={BsFacebook} />
             <Footer.Icon href="#" icon={BsInstagram} />
