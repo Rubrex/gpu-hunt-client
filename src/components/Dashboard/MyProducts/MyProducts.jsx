@@ -61,7 +61,7 @@ const MyProducts = () => {
     axios.put(advertiseUrl).then((response) => {
       if (response.data.modifiedCount) {
         refetch();
-        console.log(response.data);
+
         toast.success("Product Advertised successfully");
       }
     });

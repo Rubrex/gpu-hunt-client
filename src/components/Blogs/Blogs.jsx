@@ -5,7 +5,6 @@ import Loading from "../Shared/Loading/Loading";
 
 const Blogs = () => {
   const [selectBlog, setSelectBlog] = useState({});
-  console.log(selectBlog);
 
   const { data: blogs, isLoading } = useQuery({
     queryKey: ["blogs"],
@@ -16,8 +15,6 @@ const Blogs = () => {
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log(blogs);
 
   return (
     <section className="mb-32 ">

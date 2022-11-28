@@ -3,8 +3,7 @@
 // check isAdminLoading
 
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import { ProductContext } from "../contexts/ProductProvider";
+import { useEffect, useState } from "react";
 
 const useAdmin = (email) => {
   const [isAdmin, setIsAdmin] = useState();

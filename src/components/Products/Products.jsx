@@ -14,7 +14,6 @@ const Products = () => {
 
   // Handle Modal
   const onClose = () => {
-    console.log("Modal triggered");
     setShowModal(false);
   };
 

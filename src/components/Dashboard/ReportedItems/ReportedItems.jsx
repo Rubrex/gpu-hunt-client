@@ -27,10 +27,9 @@ const ReportedItems = () => {
   // handle delete
   const handleDelete = (pId) => {
     const deleteUrl = import.meta.env.VITE_API + "/reports/" + pId;
-    console.log(deleteUrl);
+
     axios.delete(deleteUrl).then((response) => {
       if (response.data.deletedCount) {
-        console.log(response.data);
         toast.success("Removed reported product");
         refetch();
       }

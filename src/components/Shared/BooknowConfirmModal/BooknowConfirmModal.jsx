@@ -55,7 +55,6 @@ const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
     axios
       .post(orderUrl, order)
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           toast.success("Order Placed");
           navigate("/dashboard/myorders");
@@ -65,7 +64,6 @@ const BooknowConfirmModal = ({ showModal, onClose, modalProduct }) => {
         console.log(error);
       });
 
-    console.log(order);
     // Close Modal
     onClose();
     return;

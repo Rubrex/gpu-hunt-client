@@ -30,7 +30,6 @@ const Advertised = () => {
 
   // Handle Modal
   const onClose = () => {
-    console.log("Modal triggered");
     setShowModal(false);
   };
 

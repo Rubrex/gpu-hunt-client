@@ -29,7 +29,6 @@ const AllBuyers = () => {
     const deleteUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
     axios.delete(deleteUrl).then((response) => {
       if (response.data.deletedCount) {
-        console.log(response.data);
         refetch();
       }
     });

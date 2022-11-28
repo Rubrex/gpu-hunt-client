@@ -28,7 +28,6 @@ const AllSellers = () => {
     const verifyUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
     axios.put(verifyUrl).then((response) => {
       if (response.data.matchedCount) {
-        console.log(response.data);
         refetch();
       }
     });
@@ -38,7 +37,6 @@ const AllSellers = () => {
     const deleteUrl = import.meta.env.VITE_API + "/users/sellers/" + email;
     axios.delete(deleteUrl).then((response) => {
       if (response.data.deletedCount) {
-        console.log(response.data);
         refetch();
       }
     });
