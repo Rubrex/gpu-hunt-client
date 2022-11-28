@@ -16,7 +16,6 @@ const AuthProvider = ({ children }) => {
   // States
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState(null);
-  const [role, setRole] = useState("");
   const auth = getAuth(app);
 
   //   Create User
@@ -56,7 +55,6 @@ const AuthProvider = ({ children }) => {
 
   const providerValue = {
     user,
-    role,
     isLoading,
     createUser,
     logIn,
