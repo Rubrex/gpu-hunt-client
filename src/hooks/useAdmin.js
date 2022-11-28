@@ -14,14 +14,20 @@ const useAdmin = (email) => {
     if (email) {
       const isAdminUrl = import.meta.env.VITE_API + "/users/role/" + email;
       // Check if role is admin
-      axios.get(isAdminUrl).then((response) => {
-        if (response.data === "admin") {
-          setIsAdmin(true);
-        } else {
-          setIsAdmin(false);
-        }
-        setIsAdminLoading(false);
-      });
+      axios
+        .get(isAdminUrl, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("gpuhunt_token")}`,
+          },
+        })
+        .then((response) => {
+          if (response.data === "admin") {
+            setIsAdmin(true);
+          } else {
+            setIsAdmin(false);
+          }
+          setIsAdminLoading(false);
+        });
     }
   }, [email]);
 

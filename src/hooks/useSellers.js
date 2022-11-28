@@ -10,15 +10,21 @@ const useSellers = (email) => {
       // Check if role is seller
       const url = import.meta.env.VITE_API + "/users/role/" + email;
 
-      axios.get(url).then((response) => {
-        // If the role is seller then continue
-        if (response.data === "seller") {
-          setIsSeller(true);
-        } else {
-          setIsSeller(false);
-        }
-        setIsSellerLoading(false);
-      });
+      axios
+        .get(url, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("gpuhunt_token")}`,
+          },
+        })
+        .then((response) => {
+          // If the role is seller then continue
+          if (response.data === "seller") {
+            setIsSeller(true);
+          } else {
+            setIsSeller(false);
+          }
+          setIsSellerLoading(false);
+        });
     }
   }, [email]);
 

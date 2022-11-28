@@ -8,13 +8,18 @@ import { AuthContext } from "../../../contexts/AuthProvider";
 import toast from "react-hot-toast";
 import axios from "axios";
 import SmallLoading from "../../Shared/SmallLoading/SmallLoading";
+import useToken from "../../../hooks/useToken";
 
 const Register = () => {
   useTitleChange("Register");
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
-
+  const [loginEmail, setLoginEmail] = useState("");
+  const [token] = useToken(loginEmail);
+  if (token) {
+    navigate(from, { replace: true });
+  }
   // States
   const [error, setError] = useState();
   const [loading, setLoading] = useState(false);
@@ -63,6 +68,7 @@ const Register = () => {
 
         if (user.email) {
           // User Created successfully here
+
           // Upload Image to imgbb
           // After this we are saving the image from imgbb to db
 
@@ -100,7 +106,7 @@ const Register = () => {
                       };
                       updateProfileData(profileInfo);
                       setLoading(false);
-                      navigate(from, { replace: true });
+                      setLoginEmail(email);
                     }
                   })
                   .catch((error) => {

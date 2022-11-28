@@ -16,9 +16,10 @@ const Blogs = () => {
 
   console.log(blogs);
   return (
-    <div>
-      <h2 className="text-3xl">Blogs</h2>
-    </div>
+    <section className="mb-32 ">
+      <h2 className="text-xl  mb-16 text-center">BLOGS</h2>
+      {/* Categories  */}
+    </section>
   );
 };
 

@@ -10,9 +10,15 @@ const useRole = (email) => {
     if (email) {
       //   set user Role
       const roleUrl = import.meta.env.VITE_API + "/users/role/" + email;
-      axios.get(roleUrl).then((response) => {
-        setRole(response.data);
-      });
+      axios
+        .get(roleUrl, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("gpuhunt_token")}`,
+          },
+        })
+        .then((response) => {
+          setRole(response.data);
+        });
     }
     setRoleLoading(false);
   }, [email]);

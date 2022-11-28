@@ -18,7 +18,11 @@ const MyOrders = () => {
     queryKey: ["buyerOrders"],
     queryFn: async () => {
       const url = import.meta.env.VITE_API + "/orders/" + user?.email;
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("gpuhunt_token")}`,
+        },
+      });
 
       return response.data;
     },

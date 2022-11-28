@@ -6,11 +6,18 @@ import useTitleChange from "../../../hooks/useTitle";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import toast from "react-hot-toast";
+import useToken from "../../../hooks/useToken";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const [loginEmail, setLoginEmail] = useState("");
+  const [token] = useToken(loginEmail);
   const from = location?.state?.from?.pathname || "/";
+  console.log(loginEmail, token);
+  if (token) {
+    navigate(from, { replace: true });
+  }
   // States
   const [error, setError] = useState();
   // Hooks
@@ -34,8 +41,8 @@ const Login = () => {
         // Signed in
         const user = userCredential.user;
         if (user) {
+          setLoginEmail(user?.email);
           toast.success(`Welcome back ${user?.displayName}`);
-          navigate(from, { replace: true });
         }
         // ...
       })
