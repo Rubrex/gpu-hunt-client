@@ -30,17 +30,17 @@ const GpuHuntNavbar = () => {
               {role && (
                 <div className="flex items-center gap-5">
                   {(role === "user" && (
-                    <span className="hidden md:inline font-bold pl-3 pr-8 -mr-8 py-1  bg-gray-100 rounded-md">
+                    <span className="hidden md:inline font-bold pl-3 pr-8 -mr-8 py-1  text-gray-600 bg-gray-100 rounded-md">
                       User Account
                     </span>
                   )) ||
                     (role === "seller" && (
-                      <span className="hidden md:inline font-bold pl-3 pr-8 -mr-8 py-1  bg-gray-100 rounded-md">
+                      <span className="hidden md:inline font-bold pl-3 pr-8 -mr-8 py-1 text-gray-600  bg-gray-100 rounded-md">
                         Seller Account
                       </span>
                     )) ||
                     (role === "admin" && (
-                      <span className="hidden md:inline font-bold pl-3 pr-8 -mr-8 py-1  bg-gray-100 rounded-md">
+                      <span className="hidden md:inline font-bold pl-3 pr-8 -mr-8 py-1 text-gray-600  bg-gray-100 rounded-md">
                         Admin Account
                       </span>
                     ))}
