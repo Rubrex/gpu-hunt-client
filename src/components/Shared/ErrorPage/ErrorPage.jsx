@@ -19,7 +19,9 @@ const ErrorPage = () => {
       });
   };
   return (
-    <section className={`${styles.page_404} mt-10`}>
+    <section
+      className={`${styles.page_404} mt-10 max-w-6xl mx-auto px-2 lg:px-0`}
+    >
       <h1 className="text-3xl text-center font-bold">Something Went Wrong</h1>
 
       <section className={`${styles.errorContainer}`}>

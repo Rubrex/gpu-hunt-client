@@ -17,7 +17,7 @@ const Blogs = () => {
   }
 
   return (
-    <section className="mb-32 ">
+    <section className="mb-32 max-w-6xl mx-auto px-2 lg:px-0">
       {/* Blogs  */}
       {/* Drawer */}
       <div className="grid grid-cols-1 lg:grid-cols-12">

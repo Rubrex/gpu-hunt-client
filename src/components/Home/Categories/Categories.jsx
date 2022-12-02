@@ -19,7 +19,7 @@ const Categories = () => {
   }
 
   return (
-    <section className="mb-32 ">
+    <section className="mb-32 max-w-6xl mx-auto px-2 lg:px-0">
       <h2 className="text-3xl font-bold mb-16">
         <span className="relative z-10">
           <img src={underLine} alt="" className="absolute -bottom-3  -z-10" />

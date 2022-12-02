@@ -4,20 +4,16 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/images/icons/logo.png";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import { ProductContext } from "../../../contexts/ProductProvider";
-import useRole from "../../../hooks/useRole";
+import { useScrollPosition } from "../../../hooks/useScrollPosition";
 import Loading from "../Loading/Loading";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 const GpuHuntNavbar = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
+  const [roleLoading, setRoleLoading] = useState(true);
   const { user, logOut } = useContext(AuthContext);
   const [role, setRole] = useState("");
-  // const [role, roleLoading] = useRole(user);
-  // const { role } = useContext(ProductContext);
-  // if (roleLoading) {
-  //   return <Loading />;
-  // }
+  const scrollPosition = useScrollPosition();
 
   useEffect(() => {
     //   set user Role
@@ -26,6 +22,7 @@ const GpuHuntNavbar = () => {
       console.log(roleUrl);
       axios
         .get(roleUrl, {
+          "Access-Control-Allow-Origin": true,
           headers: {
             authorization: `Bearer ${localStorage.getItem("gpuhunt_token")}`,
           },
@@ -35,15 +32,27 @@ const GpuHuntNavbar = () => {
         });
     }
 
-    // setRoleLoading(false);
+    setRoleLoading(false);
   }, [user]);
 
   const logoutHandler = () => {
     logOut();
   };
+
+  if (roleLoading) {
+    return <Loading />;
+  }
   console.log("Role from nav: ", role);
   return (
-    <Navbar fluid={true} rounded={true} className="max-w-6xl mx-auto ">
+    <Navbar
+      fluid={true}
+      rounded={true}
+      className={`max-w-6xl mx-auto  top-0 z-50 ${
+        scrollPosition > 80
+          ? "bg-white/90 backdrop-blur sticky"
+          : "bg-transparent "
+      }`}
+    >
       <Link className="flex items-center" to="/">
         <img src={logo} className="mr-3 h-6 sm:h-9" alt="GPU Hunts" />
         <span className="self-center whitespace-nowrap text-2xl font-bold text-gray-700 dark:text-white">

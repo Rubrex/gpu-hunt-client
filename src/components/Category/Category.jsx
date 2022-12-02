@@ -24,7 +24,7 @@ const Category = () => {
   }
 
   return (
-    <div>
+    <div className="max-w-6xl mx-auto px-2 lg:px-0">
       <h2 className="text-xl font-bold my-10  pl-2 border-l-4 border-primary">
         {productDetails[0]?.productCategory}
       </h2>

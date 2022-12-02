@@ -14,9 +14,7 @@ const MainLayout = () => {
   return (
     <>
       <GpuHuntNavbar />
-      <div className="max-w-6xl mx-auto px-2 lg:px-0">
-        <Outlet />
-      </div>
+      <Outlet />
       <GpuHuntFooter />
     </>
   );

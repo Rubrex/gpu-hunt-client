@@ -34,7 +34,7 @@ const Advertised = () => {
   };
 
   return (
-    <section className="mb-32">
+    <section className="mb-32 max-w-6xl mx-auto px-2 lg:px-0">
       <div className="flex justify-between">
         <h2 className="text-3xl font-bold mb-12">
           <span className="relative z-10">
