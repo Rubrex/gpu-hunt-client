@@ -7,7 +7,6 @@ const useRole = (email) => {
 
   // Get user role
   useEffect(() => {
-    console.log(email);
     if (email) {
       //   set user Role
       const roleUrl = import.meta.env.VITE_API + "/users/role/" + email;

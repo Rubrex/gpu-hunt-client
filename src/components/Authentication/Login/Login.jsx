@@ -5,9 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useTitleChange from "../../../hooks/useTitle";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import toast, { Toaster } from "react-hot-toast";
-import useToken from "../../../hooks/useToken";
-import Loading from "../../Shared/Loading/Loading";
+import toast from "react-hot-toast";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -21,7 +19,7 @@ const Login = () => {
   // Hooks
   useTitleChange("Login");
   // Access Context
-  const { logIn, logOut } = useContext(AuthContext);
+  const { logIn } = useContext(AuthContext);
 
   // Event Handlers
   const handleLogin = (event) => {
@@ -39,7 +37,6 @@ const Login = () => {
     fetch(`${import.meta.env.VITE_API}/jwt?email=${email}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log("JWT from server: ", data);
         // Token not found ? Show Error
         if (!data.accessToken) {
           return toast.error("Failed, Please contact support");

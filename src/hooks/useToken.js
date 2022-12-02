@@ -9,7 +9,6 @@ const useToken = (email) => {
       fetch(`${import.meta.env.VITE_API}/jwt?email=${email}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log("JWT from server: ", data);
           if (data.accessToken) {
             // Set token to localstorate
             localStorage.setItem("gpuhunt_token", data.accessToken);

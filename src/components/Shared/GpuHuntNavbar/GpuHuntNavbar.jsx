@@ -22,13 +22,13 @@ const GpuHuntNavbar = () => {
       const roleUrl = import.meta.env.VITE_API + "/users/role/" + user?.email;
       axios
         .get(roleUrl, {
-          "Access-Control-Allow-Origin": true,
           headers: {
             authorization: `Bearer ${localStorage.getItem("gpuhunt_token")}`,
           },
         })
         .then((response) => {
-          setRole(response.data.role);
+          console.log("Role Response: ", response.data);
+          setRole(response.data);
         });
     }
 
