@@ -17,9 +17,9 @@ const GpuHuntNavbar = () => {
 
   useEffect(() => {
     //   set user Role
+    console.log("Nav Email: ", user?.email);
     if (user?.email) {
       const roleUrl = import.meta.env.VITE_API + "/users/role/" + user?.email;
-      console.log(roleUrl);
       axios
         .get(roleUrl, {
           "Access-Control-Allow-Origin": true,
@@ -42,7 +42,7 @@ const GpuHuntNavbar = () => {
   if (roleLoading) {
     return <Loading />;
   }
-  console.log("Role from nav: ", role);
+
   return (
     <Navbar
       fluid={true}

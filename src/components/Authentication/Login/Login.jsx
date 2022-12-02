@@ -5,24 +5,23 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import useTitleChange from "../../../hooks/useTitle";
 import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 import { AuthContext } from "../../../contexts/AuthProvider";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import useToken from "../../../hooks/useToken";
+import Loading from "../../Shared/Loading/Loading";
 
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [loginEmail, setLoginEmail] = useState("");
-  const [token] = useToken(loginEmail);
+  // const [token, tokenLoading] = useToken(loginEmail);
   const from = location?.state?.from?.pathname || "/";
-  if (token) {
-    navigate(from, { replace: true });
-  }
+
   // States
   const [error, setError] = useState();
   // Hooks
   useTitleChange("Login");
   // Access Context
-  const { logIn } = useContext(AuthContext);
+  const { logIn, logOut } = useContext(AuthContext);
 
   // Event Handlers
   const handleLogin = (event) => {
@@ -30,24 +29,39 @@ const Login = () => {
     const form = event.target;
     const email = form.email.value;
     const password = form.password.value;
+    setLoginEmail(email);
 
     handleSignin(email, password);
   };
 
   const handleSignin = (email, password) => {
-    setLoginEmail(email);
-    logIn(email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        if (user) {
-          toast.success(`Welcome back ${user?.displayName}`);
+    // Get token from server
+    fetch(`${import.meta.env.VITE_API}/jwt?email=${email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("JWT from server: ", data);
+        // Token not found ? Show Error
+        if (!data.accessToken) {
+          return toast.error("Failed, Please contact support");
         }
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        setError(errorCode);
+
+        // Set token to localstorate
+        localStorage.setItem("gpuhunt_token", data.accessToken);
+        // Now Login
+        logIn(email, password)
+          .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            if (user) {
+              toast.success(`Welcome back ${user?.displayName}`);
+              navigate(from, { replace: true });
+            }
+            // ...
+          })
+          .catch((error) => {
+            const errorCode = error.code;
+            setError(errorCode);
+          });
       });
   };
 
