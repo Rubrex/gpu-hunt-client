@@ -11,12 +11,11 @@ import { format } from "date-fns";
 import axios from "axios";
 import { AuthContext } from "../../../contexts/AuthProvider";
 import { Link } from "react-router-dom";
-import { ProductContext } from "../../../contexts/ProductProvider";
+import { RoleContext } from "../../../contexts/ProductProvider";
 
 const ProductCard = ({ productInfo, setShowModal, setModalProduct }) => {
   const { user } = useContext(AuthContext);
-  const { role } = useContext(ProductContext);
-
+  const { role } = useContext(RoleContext);
   const {
     _id,
     productImage,

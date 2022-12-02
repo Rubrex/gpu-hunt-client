@@ -9,9 +9,11 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import SmallLoading from "../../Shared/SmallLoading/SmallLoading";
 import useToken from "../../../hooks/useToken";
+import { reload } from "firebase/auth";
 
 const Register = () => {
   useTitleChange("Register");
+  const { user, setRefreshAuth } = useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
   const from = location?.state?.from?.pathname || "/";
@@ -25,7 +27,7 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   // Access Context
-  const { user, createUser, updateUser } = useContext(AuthContext);
+  const { createUser, updateUser } = useContext(AuthContext);
 
   // Event Handlers
   const handleRegistration = (event) => {
@@ -45,10 +47,13 @@ const Register = () => {
   const imagehostkey = import.meta.env.VITE_IMGBB_KEY;
 
   // Update Profile in firebase
-  const updateProfileData = (profileInfo) => {
+  const updateProfileData = (profileInfo, email) => {
     updateUser(profileInfo)
       .then(() => {
+        console.log("user in register: ", user);
         // Profile updated!
+        reload(user);
+        setLoginEmail(email);
         toast.success("Profile Updated");
       })
       .catch((error) => {
@@ -104,9 +109,8 @@ const Register = () => {
                         displayName: userName,
                         photoURL: imageLink,
                       };
-                      updateProfileData(profileInfo);
+                      updateProfileData(profileInfo, email);
                       setLoading(false);
-                      setLoginEmail(email);
                     }
                   })
                   .catch((error) => {

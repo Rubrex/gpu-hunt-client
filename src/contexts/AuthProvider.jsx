@@ -8,7 +8,6 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../firebase/firebase.init";
-import axios from "axios";
 
 export const AuthContext = createContext();
 
@@ -38,12 +37,15 @@ const AuthProvider = ({ children }) => {
 
   // Update User
   const updateUser = (profileInfo) => {
+    setIsLoading(true);
     return updateProfile(auth.currentUser, profileInfo);
   };
 
   //   Auth Observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("Auth triggered");
+      // set only when userName is updated or user is not there
       if (currentUser === null || currentUser.email) {
         setUser(currentUser);
       }

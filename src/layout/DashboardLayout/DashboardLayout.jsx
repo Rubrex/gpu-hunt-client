@@ -3,11 +3,10 @@ import { NavLink, Outlet } from "react-router-dom";
 import GpuHuntFooter from "../../components/Shared/GpuHuntFooter/GpuHuntFooter";
 import GpuHuntNavbar from "../../components/Shared/GpuHuntNavbar/GpuHuntNavbar";
 import { AuthContext } from "../../contexts/AuthProvider";
-import { ProductContext } from "../../contexts/ProductProvider";
+import { RoleContext } from "../../contexts/ProductProvider";
 
 const DashboardLayout = () => {
-  const { user } = useContext(AuthContext);
-  const { role } = useContext(ProductContext);
+  const { role } = useContext(RoleContext);
 
   return (
     <>

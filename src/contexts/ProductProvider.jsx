@@ -3,20 +3,17 @@ import Loading from "../components/Shared/Loading/Loading";
 import useRole from "../hooks/useRole";
 import { AuthContext } from "./AuthProvider";
 
-export const ProductContext = createContext();
+export const RoleContext = createContext();
 
 const ProductProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const [role, roleLoading] = useRole(user?.email);
-
   if (roleLoading) {
     return <Loading />;
   }
 
   const info = { role };
-  return (
-    <ProductContext.Provider value={info}>{children}</ProductContext.Provider>
-  );
+  return <RoleContext.Provider value={info}>{children}</RoleContext.Provider>;
 };
 
 export default ProductProvider;

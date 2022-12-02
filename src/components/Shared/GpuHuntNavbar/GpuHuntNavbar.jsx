@@ -1,57 +1,35 @@
-import axios from "axios";
 import { Navbar } from "flowbite-react";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/images/icons/logo.png";
 import { AuthContext } from "../../../contexts/AuthProvider";
+import { RoleContext } from "../../../contexts/ProductProvider";
 import { useScrollPosition } from "../../../hooks/useScrollPosition";
-import Loading from "../Loading/Loading";
 import PrimaryButton from "../PrimaryButton/PrimaryButton";
 
 const GpuHuntNavbar = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
-  const [roleLoading, setRoleLoading] = useState(true);
   const { user, logOut } = useContext(AuthContext);
-  const [role, setRole] = useState("");
-  const scrollPosition = useScrollPosition();
+  // const scrollPosition = useScrollPosition();
+  const { role } = useContext(RoleContext);
 
-  useEffect(() => {
-    //   set user Role
-    console.log("Nav Email: ", user?.email);
-    if (user?.email) {
-      const roleUrl = import.meta.env.VITE_API + "/users/role/" + user?.email;
-      axios
-        .get(roleUrl, {
-          headers: {
-            authorization: `Bearer ${localStorage.getItem("gpuhunt_token")}`,
-          },
-        })
-        .then((response) => {
-          console.log("Role Response: ", response.data);
-          setRole(response.data);
-        });
-    }
-
-    setRoleLoading(false);
-  }, [user]);
-
+  console.log("Navbar: ", "email:", user?.email, " role: ", role);
   const logoutHandler = () => {
     logOut();
   };
-
-  if (roleLoading) {
-    return <Loading />;
-  }
 
   return (
     <Navbar
       fluid={true}
       rounded={true}
-      className={`max-w-6xl mx-auto  top-0 z-50 ${
+      className={`max-w-6xl mx-auto  top-0 z-50
+      ${
         scrollPosition > 80
           ? "bg-white/90 backdrop-blur sticky"
           : "bg-transparent "
-      }`}
+      }
+
+      `}
     >
       <Link className="flex items-center" to="/">
         <img src={logo} className="mr-3 h-6 sm:h-9" alt="GPU Hunts" />

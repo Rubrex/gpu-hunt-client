@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const useRole = (email) => {
   const [role, setRole] = useState(false);
-  const [roleLoading, setRoleLoading] = useState(true);
+  const [roleLoading, setRoleLoading] = useState(false);
 
   // Get user role
   useEffect(() => {
@@ -17,8 +17,9 @@ const useRole = (email) => {
           },
         })
         .then((response) => {
-          setRole(response.data.role);
-        });
+          setRole(response.data);
+        })
+        .catch((err) => console.log(err));
     }
     setRoleLoading(false);
   }, [email]);
