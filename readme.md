@@ -4,9 +4,6 @@
 
 ## Admin Access
 
-email: admin@gpuhunt.com
-pass : 123Asd\*
-
 ## Features and Functionalities:
 
 - Seller able to post new product
