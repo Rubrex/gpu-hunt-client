@@ -44,7 +44,6 @@ const AuthProvider = ({ children }) => {
   //   Auth Observer
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      console.log("Auth triggered");
       // set only when userName is updated or user is not there
       if (currentUser === null || currentUser.email) {
         setUser(currentUser);

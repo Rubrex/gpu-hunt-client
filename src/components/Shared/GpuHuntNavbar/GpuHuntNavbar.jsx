@@ -12,8 +12,6 @@ const GpuHuntNavbar = () => {
   const { user, logOut } = useContext(AuthContext);
   const scrollPosition = useScrollPosition();
   const { role } = useContext(RoleContext);
-
-  console.log("Navbar: ", "email:", user?.email, " role: ", role);
   const logoutHandler = () => {
     logOut();
   };

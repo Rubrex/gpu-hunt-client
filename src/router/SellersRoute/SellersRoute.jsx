@@ -8,7 +8,6 @@ const SellersRoute = ({ children }) => {
   const { user } = useContext(AuthContext);
   const { role } = useContext(RoleContext);
   const location = useLocation();
-  // console.log("sellerRoute", role);
 
   if (user && role === "seller") {
     return children;

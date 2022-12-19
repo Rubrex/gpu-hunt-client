@@ -50,7 +50,6 @@ const Register = () => {
   const updateProfileData = (profileInfo, email) => {
     updateUser(profileInfo)
       .then(() => {
-        console.log("user in register: ", user);
         // Profile updated!
         reload(user);
         setLoginEmail(email);
