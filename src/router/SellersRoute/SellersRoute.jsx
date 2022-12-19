@@ -1,19 +1,16 @@
 import React, { useContext } from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import Loading from "../../components/Shared/Loading/Loading";
+// import Loading from "../../components/Shared/Loading/Loading";
 import { AuthContext } from "../../contexts/AuthProvider";
-import useSellers from "../../hooks/useSellers";
+import { RoleContext } from "../../contexts/ProductProvider";
 
 const SellersRoute = ({ children }) => {
-  const { isLoading, user } = useContext(AuthContext);
-  const [isSeller, isSellerLoading] = useSellers(user?.email);
+  const { user } = useContext(AuthContext);
+  const { role } = useContext(RoleContext);
   const location = useLocation();
+  // console.log("sellerRoute", role);
 
-  if (isLoading || isSellerLoading) {
-    return <Loading />;
-  }
-
-  if (user && isSeller) {
+  if (user && role === "seller") {
     return children;
   }
 

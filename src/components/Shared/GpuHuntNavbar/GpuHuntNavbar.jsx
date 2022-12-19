@@ -10,7 +10,7 @@ import PrimaryButton from "../PrimaryButton/PrimaryButton";
 const GpuHuntNavbar = () => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
   const { user, logOut } = useContext(AuthContext);
-  // const scrollPosition = useScrollPosition();
+  const scrollPosition = useScrollPosition();
   const { role } = useContext(RoleContext);
 
   console.log("Navbar: ", "email:", user?.email, " role: ", role);
