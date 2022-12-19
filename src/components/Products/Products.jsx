@@ -11,7 +11,7 @@ const Products = () => {
   const [modalProduct, setModalProduct] = useState({});
 
   const productDetails = useLoaderData();
-
+  console.log(productDetails);
   // Handle Modal
   const onClose = () => {
     setShowModal(false);
@@ -33,16 +33,18 @@ const Products = () => {
         {/* Categories  */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 lg:gap-7">
           {productDetails &&
-            productDetails?.map((eachProduct) => (
-              <ProductCard
-                key={eachProduct._id}
-                setShowModal={() => setShowModal(!showModal)}
-                productInfo={eachProduct}
-                setModalProduct={(modalProduct) =>
-                  setModalProduct(modalProduct)
-                }
-              />
-            ))}
+            productDetails?.map((eachProduct) => {
+              return (
+                <ProductCard
+                  key={eachProduct._id}
+                  setShowModal={() => setShowModal(!showModal)}
+                  productInfo={eachProduct}
+                  setModalProduct={(modalProduct) =>
+                    setModalProduct(modalProduct)
+                  }
+                />
+              );
+            })}
         </div>
         {/* Show Modal */}
         <BooknowConfirmModal
