@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import bannerImg from "../../../assets/images/others/banner.png";
+import videoBanner from "../../../assets/videos/gaming_banner.mp4";
+import PrimaryButton from "../../Shared/PrimaryButton/PrimaryButton";
 
 const HomeBanner = () => {
   const bannerOverlay = {
@@ -8,21 +10,32 @@ const HomeBanner = () => {
     height: "600px",
   };
   return (
-    <div className="mb-32">
-      <section style={bannerOverlay} className=" bg-cover bg-no-repeat">
-        <div className="flex flex-col justify-center gap-2 lg:gap-8 h-full md:ml-24">
-          <h2 className="text-6xl font-bold text-gray-700">
-            Welcome to <span className="text-primary">GPUHunt</span>
+    <div className="mb-32 relative">
+      <div className="absolute w-full h-full  z-10 font-bold text-white">
+        <div className="max-w-6xl mx-auto px-2 lg:px-0 h-full flex flex-col justify-center gap-8 ">
+          <h2 className="text-6xl font-extrabold text-white/90">
+            Welcome to GPU Hunt
           </h2>
-          <p className="text-3xl text-gray-700">Get you dream card today.</p>
-          <Link
-            to="/register"
-            className="text-xl bg-orange-500 text-white w-24 rounded-md hover:bg-orange-400 transition-all "
-          >
-            Register
-          </Link>
+          <p className="text-3xl text-gray-200/90">Get you dream card today.</p>
+          <div>
+            <Link to="/products">
+              <button className="inline-block bg-primary/20 text-white ring-1 ring-primary border-4 pb-3 -skew-x-6 px-6 py-2 text-2xl border-primary/80 hover:border-primary hover:bg-primary/60 transition-all">
+                Browse Now
+              </button>
+              {/* <PrimaryButton className="text-lg border-transparent">
+              Register
+            </PrimaryButton> */}
+            </Link>
+          </div>
         </div>
-      </section>
+      </div>
+      <div className="bg-orange-900/20 backdrop-blur-sm absolute top-0 left-0 w-full h-full"></div>
+      <video
+        src={videoBanner}
+        autoPlay
+        muted
+        className="w-full h-screen object-cover  "
+      ></video>
     </div>
   );
 };
