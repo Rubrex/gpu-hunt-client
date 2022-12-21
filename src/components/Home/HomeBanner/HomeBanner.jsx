@@ -13,7 +13,7 @@ const HomeBanner = () => {
     <div className="mb-32 relative">
       <div className="absolute w-full h-full  z-10 font-bold text-white">
         <div className="max-w-6xl mx-auto px-2 lg:px-0 h-full flex flex-col justify-center gap-8 ">
-          <h2 className="text-6xl font-extrabold text-white/90">
+          <h2 className="text-5xl md:text-6xl font-extrabold text-white/90">
             Welcome to GPU Hunt
           </h2>
           <p className="text-3xl text-gray-200/90">Get you dream card today.</p>
