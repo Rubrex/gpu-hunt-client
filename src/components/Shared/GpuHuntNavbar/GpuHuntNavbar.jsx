@@ -71,7 +71,7 @@ const GpuHuntNavbar = () => {
                       id="dropdown"
                       className={`${
                         toggleDropdown ? "block" : "hidden"
-                      } absolute top-12 right-0 z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow-md dark:bg-gray-700`}
+                      } absolute top-12 right-0 z-20 w-44 bg-white rounded divide-y divide-gray-100 shadow-md dark:bg-gray-700`}
                     >
                       <ul
                         className="py-1 text-sm text-gray-700 dark:text-gray-200"
